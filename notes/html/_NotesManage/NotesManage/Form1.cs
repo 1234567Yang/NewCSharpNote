@@ -107,7 +107,9 @@ namespace NotesManage
             File.WriteAllText(dir + "F_" + this.textBox_html.Text,this.textEditorControl1.Text);
             File.AppendAllText("index.txt", dir + "F_" + this.textBox_html.Text + "|" + 
                 this.textBox_title.Text + "|" + 
-                DateTime.UtcNow.ToString() + 
+                DateTime.UtcNow.ToString() + "|" +
+                this.textBox_color.Text + "|" +
+                this.textBox_bgcolor.Text + 
                 Environment.NewLine);
 
             if(Directory.Exists("raw\\" + this.textBox_html.Text.Substring(0, this.textBox_html.Text.IndexOf("."))))

@@ -10,3 +10,14 @@ C:\C#sourceCode\NotesManage\NotesManage\obj\Debug\NotesManage.csproj.CoreCompile
 C:\C#sourceCode\NotesManage\NotesManage\obj\Debug\NotesManage.csproj.CopyComplete
 C:\C#sourceCode\NotesManage\NotesManage\obj\Debug\NotesManage.exe
 C:\C#sourceCode\NotesManage\NotesManage\obj\Debug\NotesManage.pdb
+C:\HTML source code\NewCSharpNote\notes\html\_NotesManage\NotesManage\bin\Debug\NotesManage.exe.config
+C:\HTML source code\NewCSharpNote\notes\html\_NotesManage\NotesManage\bin\Debug\NotesManage.exe
+C:\HTML source code\NewCSharpNote\notes\html\_NotesManage\NotesManage\bin\Debug\NotesManage.pdb
+C:\HTML source code\NewCSharpNote\notes\html\_NotesManage\NotesManage\obj\Debug\NotesManage.csproj.AssemblyReference.cache
+C:\HTML source code\NewCSharpNote\notes\html\_NotesManage\NotesManage\obj\Debug\NotesManage.Form1.resources
+C:\HTML source code\NewCSharpNote\notes\html\_NotesManage\NotesManage\obj\Debug\NotesManage.Properties.Resources.resources
+C:\HTML source code\NewCSharpNote\notes\html\_NotesManage\NotesManage\obj\Debug\NotesManage.csproj.GenerateResource.cache
+C:\HTML source code\NewCSharpNote\notes\html\_NotesManage\NotesManage\obj\Debug\NotesManage.csproj.CoreCompileInputs.cache
+C:\HTML source code\NewCSharpNote\notes\html\_NotesManage\NotesManage\obj\Debug\NotesManage.csproj.CopyComplete
+C:\HTML source code\NewCSharpNote\notes\html\_NotesManage\NotesManage\obj\Debug\NotesManage.exe
+C:\HTML source code\NewCSharpNote\notes\html\_NotesManage\NotesManage\obj\Debug\NotesManage.pdb

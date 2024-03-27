@@ -38,6 +38,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox_model = new System.Windows.Forms.TextBox();
+            this.textBox_color = new System.Windows.Forms.TextBox();
+            this.textBox_bgcolor = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textEditorControl1
@@ -54,43 +56,44 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 72);
+            this.label1.Location = new System.Drawing.Point(19, 43);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(143, 91);
+            this.label1.Size = new System.Drawing.Size(143, 143);
             this.label1.TabIndex = 1;
-            this.label1.Text = "HTML:\r\n\r\nTITLE:\r\n\r\nDESCRIPTION:\r\n\r\nKEY WORDS(separate by ,):";
+            this.label1.Text = "HTML:\r\n\r\nTITLE:\r\n\r\nDESCRIPTION:\r\n\r\nKEY WORDS(separate by ,):\r\n\r\nColor:\r\n\r\nbgColor" +
+    ":";
             // 
             // textBox_html
             // 
-            this.textBox_html.Location = new System.Drawing.Point(59, 69);
+            this.textBox_html.Location = new System.Drawing.Point(59, 40);
             this.textBox_html.Name = "textBox_html";
             this.textBox_html.Size = new System.Drawing.Size(475, 20);
             this.textBox_html.TabIndex = 2;
             // 
             // textBox_title
             // 
-            this.textBox_title.Location = new System.Drawing.Point(59, 95);
+            this.textBox_title.Location = new System.Drawing.Point(59, 66);
             this.textBox_title.Name = "textBox_title";
             this.textBox_title.Size = new System.Drawing.Size(475, 20);
             this.textBox_title.TabIndex = 5;
             // 
             // textBox_keywords
             // 
-            this.textBox_keywords.Location = new System.Drawing.Point(168, 147);
+            this.textBox_keywords.Location = new System.Drawing.Point(168, 118);
             this.textBox_keywords.Name = "textBox_keywords";
             this.textBox_keywords.Size = new System.Drawing.Size(434, 20);
             this.textBox_keywords.TabIndex = 6;
             // 
             // textBox_descrip
             // 
-            this.textBox_descrip.Location = new System.Drawing.Point(100, 121);
+            this.textBox_descrip.Location = new System.Drawing.Point(100, 92);
             this.textBox_descrip.Name = "textBox_descrip";
             this.textBox_descrip.Size = new System.Drawing.Size(434, 20);
             this.textBox_descrip.TabIndex = 7;
             // 
             // button_add
             // 
-            this.button_add.Location = new System.Drawing.Point(250, 187);
+            this.button_add.Location = new System.Drawing.Point(250, 195);
             this.button_add.Name = "button_add";
             this.button_add.Size = new System.Drawing.Size(75, 23);
             this.button_add.TabIndex = 8;
@@ -125,11 +128,29 @@
             this.textBox_model.TabIndex = 11;
             this.textBox_model.Text = "model.html";
             // 
+            // textBox_color
+            // 
+            this.textBox_color.Location = new System.Drawing.Point(59, 144);
+            this.textBox_color.Name = "textBox_color";
+            this.textBox_color.Size = new System.Drawing.Size(434, 20);
+            this.textBox_color.TabIndex = 12;
+            this.textBox_color.Text = "blue";
+            // 
+            // textBox_bgcolor
+            // 
+            this.textBox_bgcolor.Location = new System.Drawing.Point(71, 170);
+            this.textBox_bgcolor.Name = "textBox_bgcolor";
+            this.textBox_bgcolor.Size = new System.Drawing.Size(434, 20);
+            this.textBox_bgcolor.TabIndex = 13;
+            this.textBox_bgcolor.Text = "transparent";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(622, 535);
+            this.Controls.Add(this.textBox_bgcolor);
+            this.Controls.Add(this.textBox_color);
             this.Controls.Add(this.textBox_model);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button1);
@@ -160,6 +181,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox_model;
+        private System.Windows.Forms.TextBox textBox_color;
+        private System.Windows.Forms.TextBox textBox_bgcolor;
     }
 }
 
