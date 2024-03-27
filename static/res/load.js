@@ -48,7 +48,7 @@ function loadAnnouncement(){
 }
 function loadHintConsole(){
 	console.log('%c LICENSE: 未经允许，禁止商业使用本项目（包括使用本项目的任何CSS/JS做有营利性的网站，包括广告）。 The Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) ', 
-	'font-size:30px; background:rgb(0,255,255); color: black');
+	'font-size:20px; background:rgb(255,255,0); color: black');
 }
 function getUrlParams(url) {
 	let urlStr = url.split('?')[1]
