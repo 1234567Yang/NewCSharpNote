@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+        <meta name="keywords" content="C#数据库, C# Database, C#, Database, EF, Entity Framework, Create database, 创建数据库">
+        <meta name="description" content="C# 数据库Database Entity Framework(EF) 创建和使用方式">
+        <title>C# 数据库Database Entity Framework(EF) 创建和使用方式</title>
+
+        <link rel="icon" href="../../../static/image/favicon.ico">
+		
+		
+		
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4204717380896480"
+     crossorigin="anonymous"></script>
+
+     
+        <script type="text/javascript" src="../../../static/res/codemirror_6.65.7_codemirror.min.js"></script>
+        <script type="text/javascript" src="../../../static/res/codemirror_codemirror5_mode_clike_clike.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_6.65.7_codemirror.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_theme_ambiance.css">
+        
+
+        
+        <script type="text/javascript" src="../../../static/res/require_2.3.5_minified.js"></script>
+        <script type="text/javascript" src="../../../static/res/load.js"></script>
+        <script type="text/javascript">
+            window.onload = function() {
+                load();
+            }
+        </script>
+
+
+        <link rel="stylesheet" type="text/css" href="../../../static/res/model.css">
+    </head>
+    <body>
+        <div class="header header-footer">
+            <span id="header-hint">笔记 - C# 数据库Database Entity Framework(EF) 创建和使用方式</span>
+            <img src="../../../static/image/LanHua.png" id="header-img">
+        </div>
+		<br>
+		<br>
+        <br>
+		<p id="announcement"></p>
+        <div class="content">
+            <p>之前搞懂了C#的Entity Framework，就没做笔记，没想到几个月全忘光了。</p>
+<p>今天记录如何创建一个数据库。</p>
+<p>点击服务器资源管理器</p>
+<p>添加连接</p>
+<p>主机名就是你电脑名</p>
+<p>点击新建，它会提示你没有数据库要不要新建一个</p>
+<p>点击“是”</p>
+<img class="img" alt="位置" src="position.jpg">
+<h3>当然了，通过SQL管理也是可以的。</h3>
+<p>剩下的创建数据库：</p>
+<textarea class="codeTextarea">
+private static UserContext userDatabase = new UserContext();
+public class UserContext : DbContext
+{
+    public DbSet<另一个Class> User { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer(@"Data Source=******;Initial Catalog=*******;Integrated Security=******");
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+    }
+}
+public class 另一个Class
+{
+    [Key]
+    public long Key { get; set; }
+    public string UserID { get; set; }
+    public string Password { get; set; }
+    public User(string userID, string password)
+    {
+        this.UserID = userID;
+        this.Password = password;
+    }
+}
+</textarea>
+<b>里面是可以加List的，但是不能加数组，添加List的时候可以新建一个类型，然后里面同样需要<code>[Key]</code>和默认构建器，如果不想要<code>[Key]</code>可以用<code>[Owned]</code>关键字修饰这个Class。</b>
+
+        </div>
+        <br>
+        <div class="footer header-footer">
+            <span>Made by 1234567Yang</span>
+            <span>
+                在<a href="https://github.com/1234567Yang/CSharpNote/">GitHub</a>上查看源代码
+            </span>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+        <meta name="keywords" content="C# Bitmap, C# Screenshot, C# 截图, C# 截取屏幕, C#图片压缩, C#缩略图, C# 图片设置像素, C# Bitmap Pixel, C# LockBits, C# LockBits用法">
+        <meta name="description" content="C#屏幕截图，获取/设置图片像素，C#获取缩略图（图片压缩）和LockBits。">
+        <title>C#屏幕截图，获取/设置图片像素，C#获取缩略图（图片压缩）和LockBits</title>
+
+        <link rel="icon" href="../../../static/image/favicon.ico">
+		
+		
+		
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4204717380896480"
+     crossorigin="anonymous"></script>
+
+     
+        <script type="text/javascript" src="../../../static/res/codemirror_6.65.7_codemirror.min.js"></script>
+        <script type="text/javascript" src="../../../static/res/codemirror_codemirror5_mode_clike_clike.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_6.65.7_codemirror.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_theme_ambiance.css">
+        
+
+        
+        <script type="text/javascript" src="../../../static/res/require_2.3.5_minified.js"></script>
+        <script type="text/javascript" src="../../../static/res/load.js"></script>
+        <script type="text/javascript">
+            window.onload = function() {
+                load();
+            }
+        </script>
+
+
+        <link rel="stylesheet" type="text/css" href="../../../static/res/model.css">
+    </head>
+    <body>
+        <div class="header header-footer">
+            <span id="header-hint">笔记 - C#屏幕截图，获取/设置图片像素，C#获取缩略图（图片压缩）和LockBits</span>
+            <img src="../../../static/image/LanHua.png" id="header-img">
+        </div>
+		<br>
+		<br>
+        <br>
+		<p id="announcement"></p>
+        <div class="content">
+            
+
+
+<br><br><br>
+<ul>
+    <li>基本的简单截图：</li>
+</ul>
+<textarea class="codeTextarea">
+const int wh = 500;
+Bitmap bmp = new Bitmap(wh, wh);
+
+Graphics g = Graphics.FromImage(bmp); // 在这里调用了BMP
+
+g.CopyFromScreen(new Point(0, 0), new Point(0, 0), new Size(wh, wh));
+bmp.Save("screenshot.png");
+</textarea>
+<p>先创建一个指定大小的<code>Bitmap</code>，然后再创建一个<code>Graphics</code></p>
+<p><code>Graphics</code>我也不是很懂。。。</p>
+<blockquote cite="chat.bing.com">
+Graphics 类是 System.Drawing 命名空间的一部分，用于在 .NET 图形表面上绘制形状、文本和图像。它提供了绘制到设备上下文的方法，设备上下文可以是屏幕、打印机或位图。
+</blockquote>
+<p>第一个<code>Point</code>参数指定屏幕上捕获矩形的起点，第二个<code>Point</code>参数指定图像中目标矩形的起点。</p>
+<img class="img" alt="重载方法1" src="Graphics重载1.png">
+<img class="img" alt="重载方法2" src="Graphics重载2.png">
+
+
+
+
+<br><br><br>
+<ul>
+    <li>缩略图/像素获取：</li>
+</ul>
+<p>然后所有方法扔这里：</p>
+<textarea class="codeTextarea">
+static void Main(string[] args)
+{
+    Bitmap bmp = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+
+    // Create a graphics object from the bitmap
+    Graphics g = Graphics.FromImage(bmp); // 在这里调用了BMP
+
+    g.CopyFromScreen(new Point(0, 0), new Point(0, 0), new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height));
+
+    Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+    BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, bmp.PixelFormat);
+
+    //bmp.SetPixel(0, 0, Color.FromArgb(100,100,100,100)); 会报错
+
+    bmp.UnlockBits(bmpData);
+    //bmp.Save("screenshot_before.bmp");
+
+    //bmp = (Bitmap)bmp.GetThumbnailImage(Screen.PrimaryScreen.Bounds.Width / 2, Screen.PrimaryScreen.Bounds.Height / 2, ()=>{ return false; },IntPtr.Zero);
+    //bmp.Save("screenshot.bmp");
+
+    //Process.Start("explorer.exe", "screenshot.bmp");
+    //Process.Start("explorer.exe", "screenshot_before.bmp");
+}
+</textarea>
+<p><code>LockBits</code>直接通过指针访问，用完之后要<code>UnlockBits</code>，期间不能改bmp。</p>
+<p><code>GetThumbnailImage</code>获取缩略图。</p>
+        </div>
+        <br>
+        <div class="footer header-footer">
+            <span>Made by 1234567Yang</span>
+            <span>
+                在<a href="https://github.com/1234567Yang/CSharpNote/">GitHub</a>上查看源代码
+            </span>
+        </div>
+    </body>
+</html>

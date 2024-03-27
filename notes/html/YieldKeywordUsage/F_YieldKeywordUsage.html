@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+        <meta name="keywords" content="C# Yield, C# 返回枚举类型, C# 关键字, C# Yield 关键字">
+        <meta name="description" content="C# 方法返回枚举 Yield 关键词用法详解，return前面可以加的修饰关键字">
+        <title>C# 方法返回枚举 Yield 关键词用法详解</title>
+
+        <link rel="icon" href="../../../static/image/favicon.ico">
+		
+		
+		
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4204717380896480"
+     crossorigin="anonymous"></script>
+
+     
+        <script type="text/javascript" src="../../../static/res/codemirror_6.65.7_codemirror.min.js"></script>
+        <script type="text/javascript" src="../../../static/res/codemirror_codemirror5_mode_clike_clike.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_6.65.7_codemirror.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_theme_ambiance.css">
+        
+
+        
+        <script type="text/javascript" src="../../../static/res/require_2.3.5_minified.js"></script>
+        <script type="text/javascript" src="../../../static/res/load.js"></script>
+        <script type="text/javascript">
+            window.onload = function() {
+                load();
+            }
+        </script>
+
+
+        <link rel="stylesheet" type="text/css" href="../../../static/res/model.css">
+    </head>
+    <body>
+        <div class="header header-footer">
+            <span id="header-hint">笔记 - C# 方法返回枚举 Yield 关键词用法详解</span>
+            <img src="../../../static/image/LanHua.png" id="header-img">
+        </div>
+		<br>
+		<br>
+        <br>
+		<p id="announcement"></p>
+        <div class="content">
+            <!--请不要添加body-->
+
+<p>
+    yield 在C#中可以理解成依次返回，返回的是IEnumerable&lt;I&gt;,所以我们接下来看一个简单的例子：
+</p>
+<!--&lt;&gt;-->
+
+<textarea class="codeTextarea">
+using static System.Console;
+using System.Collections.Generic;
+
+class Program
+{
+    //一个返回类型为IEnumerable<int>，其中包含三个yield return
+    public static IEnumerable<int> enumerableFuc()
+    {
+        yield return 1;
+        yield return 2;
+        yield return 3;
+    }
+
+    static void Main(string[] args)
+    {
+        //通过foreach循环迭代此函数
+        foreach (int item in enumerableFuc())
+        {
+            WriteLine(item);
+        }
+        ReadKey();
+    }
+}
+</textarea>
+<p>输出：</p>
+<textarea class="outputTextarea">
+1
+2
+3
+
+C:\C#sourceCode\YieldExample\YieldExample\bin\Debug\net6.0\YieldExample.exe (进程 19716)已退出，代码为 0。
+要在调试停止时自动关闭控制台，请启用“工具”->“选项”->“调试”->“调试停止时自动关闭控制台”。
+按任意键关闭此窗口. . .
+</textarea>
+
+
+<p>
+    我们可以看到，在<code>foreach</code>中，它迭代了<code>enumerableFuc</code>里面的<code>yield</code>数值。
+</p>
+
+<p>然后你甚至可以这样：</p>
+<textarea class="codeTextarea">
+static void Main(string[] args)
+{
+    for (int i = 0; i < 100; i++)
+    {
+        foreach (var a in EnumerableFunc(i))
+        {
+            Console.Write(a + " ");
+        }
+        Console.WriteLine("*");
+    }
+    Console.WriteLine("END");
+    Console.ReadLine();
+}
+
+public static IEnumerable<int> EnumerableFunc(int i)
+{
+    if (i % 5 == 0)
+    {
+        yield return 999;
+    }
+    yield return 1;
+    yield return 2;
+    yield return 3;
+}
+</textarea>
+
+<p>输出：</p>
+<textarea class="outputTextarea">
+999 1 2 3 *
+1 2 3 *
+1 2 3 *
+1 2 3 *
+1 2 3 *
+999 1 2 3 *
+1 2 3 *
+1 2 3 *
+1 2 3 *
+1 2 3 *
+999 1 2 3 *
+1 2 3 *
+1 2 3 *
+1 2 3 *
+1 2 3 *
+999 1 2 3 *
+1 2 3 *
+1 2 3 *
+1 2 3 *
+1 2 3 *
+999 1 2 3 *
+
+......
+
+C:\C#sourceCode\YieldExample\YieldExample\bin\Debug\net6.0\YieldExample.exe (进程 19716)已退出，代码为 0。
+要在调试停止时自动关闭控制台，请启用“工具”->“选项”->“调试”->“调试停止时自动关闭控制台”。
+按任意键关闭此窗口. . .
+</textarea>
+
+        </div>
+        <br>
+        <div class="footer header-footer">
+            <span>Made by 1234567Yang</span>
+            <span>
+                在<a href="https://github.com/1234567Yang/CSharpNote/">GitHub</a>上查看源代码
+            </span>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+        <meta name="keywords" content="Bitmap, C# Bitmap, C# Bitmap用法, C#图片, C#创建图片, C# BMP">
+        <meta name="description" content="C# Bitmap 基本用法">
+        <title>C# Bitmap 基本用法</title>
+
+        <link rel="icon" href="../../../static/image/favicon.ico">
+		
+		
+		
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4204717380896480"
+     crossorigin="anonymous"></script>
+
+     
+        <script type="text/javascript" src="../../../static/res/codemirror_6.65.7_codemirror.min.js"></script>
+        <script type="text/javascript" src="../../../static/res/codemirror_codemirror5_mode_clike_clike.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_6.65.7_codemirror.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_theme_ambiance.css">
+        
+
+        
+        <script type="text/javascript" src="../../../static/res/require_2.3.5_minified.js"></script>
+        <script type="text/javascript" src="../../../static/res/load.js"></script>
+        <script type="text/javascript">
+            window.onload = function() {
+                load();
+            }
+        </script>
+
+
+        <link rel="stylesheet" type="text/css" href="../../../static/res/model.css">
+    </head>
+    <body>
+        <div class="header header-footer">
+            <span id="header-hint">笔记 - C# Bitmap 基本用法</span>
+            <img src="../../../static/image/LanHua.png" id="header-img">
+        </div>
+		<br>
+		<br>
+        <br>
+		<p id="announcement"></p>
+        <div class="content">
+            <p>Bitmap基本用法，先上代码：</p>
+<textarea class="codeTextarea">
+using System;
+using System.Data.SqlTypes;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Net;
+
+namespace MyApp
+{
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
+    //[System.Runtime.Versioning.SupportedOSPlatform("linux")] //支持多个系统，如果添加也不会出现警告，编译器会认为可以运行
+    
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            ConverterExample();
+
+        }
+        public static void paramsReview(params int[] num)
+        {
+            foreach(var sg in num)
+            {
+                Console.WriteLine(sg);
+                
+            }
+        }
+        public static void SetPixelExample()
+        {
+            Random rd = new Random();
+            Bitmap image1;
+
+            image1 = new Bitmap(@"C:\000素材大全\兰花_透明.png", true);
+
+            int x, y;
+
+            // Loop through the images pixels to reset color.
+            for (x = 0; x < image1.Width; x++)
+            {
+                for (y = 0; y < image1.Height; y++)
+                {
+                    Color pixelColor = image1.GetPixel(x, y);
+                    if(pixelColor.A > 0)
+                    {
+                        pixelColor = Color.FromArgb((pixelColor.R - 50 > 0) ? (pixelColor.R - 50 + rd.Next(0, 50)) : (pixelColor.R), (pixelColor.G - 50 > 0) ? (pixelColor.G - 50 + rd.Next(0, 50)) : (pixelColor.G), (pixelColor.B - 50 > 0) ? (pixelColor.B - 50 + rd.Next(0, 50)) : (pixelColor.B));
+
+                    }
+                    image1.SetPixel(x, y, pixelColor);
+                }
+            }
+            MemoryStream stream = new MemoryStream();
+            image1.Save(stream, ImageFormat.Png);
+
+            using (FileStream file = new FileStream(@"output.png", FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                stream.WriteTo(file);
+            }
+            Process.Start("explorer.exe", @"output.png");
+            Process.Start("explorer.exe", @"C:\000素材大全\兰花_透明.png");
+        }
+        public static void ConverterExample()
+        {
+            Bitmap bmp = new Bitmap(@"C:\000素材大全\兰花_透明.png");
+            bmp.Save(@"Test.ico", ImageFormat.Icon);
+
+
+            //Stream stream = File.Create(@"Test2.ico");
+            //Icon icon = Icon.FromHandle(bmp.GetHicon());
+            //icon.Save(stream);       //   save the icon
+            //stream.Close();
+            //事实证明，不大行
+
+
+            Process.Start("explorer.exe", @"Test.ico");
+            //Process.Start("explorer.exe", @"Test2.ico"); 
+
+        }
+    }
+}
+</textarea>
+<b>看着很乱是因为里面写的时候加了一堆乱七八糟的功能，实际上就是这个方法：<code>SetPixel</code></b>
+<b>当然了，还有<code>ImageFormat</code>这个要点，也没啥好讲的，就是一个转换格式，但是不支持webp格式，可以自己下载第三方库。</b>
+
+
+<p>而且我之前从网上见到了ICO文件这样保存的：</p>
+<textarea class="codeTextarea">
+//错误示范，请勿模仿
+Stream stream = File.Create(@"Test2.ico");
+Icon icon = Icon.FromHandle(bmp.GetHicon());
+icon.Save(stream);       //   save the icon
+stream.Close();
+//错误示范，请勿模仿
+</textarea>
+<p>各位发代码之前能不能先运行一下啊？有没有报错都不看直接发到网上去？</p>
+
+
+<p>这里还有个File的方法：</p>
+
+<textarea class="codeTextarea">
+MemoryStream stream = new MemoryStream();
+image1.Save(stream, ImageFormat.Png);
+using (FileStream file = new FileStream(@"output.png", FileMode.OpenOrCreate, FileAccess.Write))
+{
+    stream.WriteTo(file);
+}</textarea>
+
+<p>梳理一下：先是创建了一个<code>MemoryStream</code>的对象，然后用<code>image1.Save</code>方法，写到<code>MemoryStream</code>里面</p>
+<p>之后又创建了一个<code>FileStream</code>，并用之前创建的<code>MemoryStream</code>对象（<code>stream</code>）的<code>WriteTo</code>方法写到文件（<code>FileStream file</code>）</p>
+
+
+<p>这里顺便介绍两个小点</p>
+<ul>
+    <li><code>[System.Runtime.Versioning.SupportedOSPlatform("windows")]</code>这个地方是选择支持的平台，这个地方提及了一下，是因为Bitmap类<a href="https://stackoverflow.com/questions/33344200/manipulating-images-with-net-core">不支持跨平台了</a></li>
+    <li><code>Process.Start("explorer.exe", @"Test.ico");</code>可以用默认的程序打开不同类型的文件。</li>
+</ul>
+
+
+        </div>
+        <br>
+        <div class="footer header-footer">
+            <span>Made by 1234567Yang</span>
+            <span>
+                在<a href="https://github.com/1234567Yang/CSharpNote/">GitHub</a>上查看源代码
+            </span>
+        </div>
+    </body>
+</html>

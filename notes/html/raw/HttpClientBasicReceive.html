@@ -1,0 +1,138 @@
+<p>今天继续讲C#网络<del>全家桶</del>系列。</p>
+
+
+
+<br><br><br>
+<ul>
+    <li>接收数据：</li>
+</ul>
+
+<textarea class="codeTextarea">
+HttpClient httpClient = new HttpClient();
+HttpResponseMessage res = httpClient.GetAsync("https://www.baidu.com/").Result;
+</textarea>
+
+<p>数据头：</p>
+<textarea class="codeTextarea">
+var headers = res.Headers;
+foreach (var header in headers)
+{
+    Console.WriteLine(header);
+}
+
+
+if (headers.TryGetValues("Date", out var values))
+{
+    var contentType = values.First(); //First - LINQ
+    Console.WriteLine($"Date: {contentType}");
+}
+</textarea>
+
+
+
+<br><br><br>
+<ul>
+    <li>其中<code>HttpResponseMessage.Content.Headers</code>和<code>HttpResponseMessage.Headers</code>的区别（个人理解）：</li>
+</ul>
+
+
+<p><code>HttpResponseMessage.Content.Headers</code>偏向应用。</p>
+<p><code>HttpResponseMessage.Headers</code>偏向信息。</p>
+
+<textarea class="codeTextarea">
+public static void HttpClientGetHeaderAndContent()
+{
+
+    HttpRequestMessage message = new HttpRequestMessage();
+    message.RequestUri = new Uri(@"https://example.com/");
+    message.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+    // message.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+
+    HttpClient httpClient = new HttpClient();
+
+    HttpResponseMessage all = httpClient.Send(message);
+    HttpContentHeaders res = all.Content.Headers;
+    HttpHeaders headers = all.Headers;
+    
+    foreach(var a in res)
+    {
+        Console.WriteLine(a.Key + " : " + a.Value.First());
+    }
+    Console.WriteLine("********************");
+    foreach(var a in headers)
+    {
+        Console.WriteLine(a.Key + " : " + a.Value.First());
+    }
+}
+</textarea>
+<p>输出：</p>
+<textarea class="outputTextarea">
+Content-Encoding : deflate
+Content-Type : text/html; charset=utf-8
+Expires : Tue, 24 Oct 2023 03:36:11 GMT
+Last-Modified : Thu, 17 Oct 2019 07:18:26 GMT
+Content-Length : 630
+********************
+Age : 525892
+Cache-Control : max-age=604800
+Date : Tue, 17 Oct 2023 03:36:11 GMT
+ETag : "3147526947+deflate"
+Server : ECS
+Vary : Accept-Encoding
+X-Cache : HIT
+</textarea>
+<p>意思可以自己搜，没必要全理解。</p>
+<b>
+<code>Content-Length</code>只是内容的长度。
+</b>
+
+
+
+<br><br><br>
+<ul>
+    <li>大文件进度下载：</li>
+</ul>
+<textarea class="codeTextarea">
+public static async void BigFileDownloadTest()
+{
+    //HttpClient testhttpClient = new HttpClient();
+    //Console.WriteLine(testhttpClient.GetAsync(@"https://files.testfile.org/ZIPC/300MB-Corrupt-Testfile.Org.zip").Result.Content.ReadAsByteArrayAsync().Result.Length);
+    //Console.WriteLine("-----------------------------------------");
+    //Thread.Sleep(10000);
+    //Console.WriteLine("-----------------------------------------");
+
+    using (var httpClient = new HttpClient())
+    {
+        using (var response = await httpClient.GetAsync("https://files.testfile.org/ZIPC/300MB-Corrupt-Testfile.Org.zip", HttpCompletionOption.ResponseHeadersRead))
+        {
+            long? len = response.Content.Headers.ContentLength; // 获取文件总长度
+            using (var stream = await response.Content.ReadAsStreamAsync())
+            {
+                FileStream fs = File.Open("1.zip", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                
+                var buffer = new byte[1024];
+                int bytesRead;
+                long totalByte = 0;
+                while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                {
+                    fs.Seek(0, SeekOrigin.End);
+                    
+                    fs.Write(buffer.Take(bytesRead).ToArray());
+                    Console.SetCursorPosition(1,1);
+                    Console.WriteLine((int)(1.0 * totalByte / len * 100) + "%");
+                    totalByte += bytesRead;
+                }
+
+                Console.SetCursorPosition(1, 1);
+                Console.WriteLine("Finished");
+            }
+        }
+    }
+}
+</textarea>
+<p>核心处只有<code>HttpCompletionOption.ResponseHeadersRead</code>，意思是接收到数据就返回。</p>
+<p>如果换成<code>ResponseContentRead</code>的话，那就是直到完成才返回。</p>
+<p>代码中先获取了<code>response.Content.Headers.ContentLength</code>总长度，然后创造一个文件，之后用<code>while</code>循环读取，直到读取置0。如果网络取消链接不代表会跳出循环，而是直接给你抛出一个<code>SocketException: 你的主机中的软件中止了一个已建立的连接。</code>异常。</p>
+<p>然后用<code>FileStream.seek</code>方法切换到文件尾，并追加字节。</p>
+<p>由于可能传输不到1024字节，所以用<code>Take(bytesRead)</code>方法，来仅仅写入有效字节（否则会写入一大堆空字节，造成文件损坏）。</p>
+<p>然后把计算出的下载度打印出来，最后保存文件。</p>
