@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Table</title>
+</head>
+<body>
+    <table id="noteTable">
+        <tr>
+            <th>笔记标题</th>
+            <th>笔记时间</th>
+        </tr>
+    </table>
+
+    <script>
+        fetch('index.txt')
+        .then(response => response.text())
+        .then(data => {
+            let lines = data.split('\n');
+            let table = document.getElementById('noteTable');
+            for(let line of lines) {
+                let parts = line.split('|');
+                if(parts.length == 3) {
+                    let row = table.insertRow(-1);
+					//row.class = "notes-content";
+					row.classList.add("notes-content");
+					let whole = parts[1];
+					//let less = (parts[1].length <= 45)?(parts[1]):(parts[1].substring(0, 45) + "...");
+                    row.insertCell(0).innerHTML = '<a target="_blank" href="' + parts[0] + '">' + whole + '</a>';
+                    row.insertCell(1).innerHTML = parts[2];
+                    <!-- row.onclick = function() { -->
+                        <!-- window.location.href = parts[0]; -->
+                    <!-- } -->
+                }
+            }
+        });
+    </script>
+	<style>
+		body{
+			background-image: url('big.png');
+			background-size: 100% 100%;
+		}
+		#noteTable {
+			margin: auto;
+			border-collapse: separate;
+			border-spacing: 25px;
+		}
+		.notes-content {
+			position: relative;
+			font-size: 18px;
+			background: rgba(220,220,220,0.5);
+		}
+		.notes-content a{
+			position: relative;
+			display: block;
+			color: blue;
+			text-decoration: none;
+		}
+		.notes-content:hover {
+			background: rgb(150,150,150);
+		}
+		
+		@media screen and (max-width: 800px) {
+			body {
+				background-image: url('small.png') !important;
+			}
+			.notes-content {
+				font-size: 12px;
+				background: rgba(220,220,220,0.5);
+			}
+		}
+	</style>
+</body>
+</html>
