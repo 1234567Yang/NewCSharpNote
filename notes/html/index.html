@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Table</title>
+    <title>我的C#笔记</title>
+	<link rel="icon" href="../../static/image/favicon.ico">
 </head>
 <body>
+	<p id="announcement"></p>
     <table id="noteTable">
         <tr>
             <th>笔记标题</th>
@@ -12,6 +14,12 @@
     </table>
 
     <script>
+		var request = new XMLHttpRequest();
+		request.open('GET', "../../static/res/announcement.txt", false);
+		request.send(null);
+		if (request.status === 200) {
+			document.getElementById("announcement").innerHTML = request.responseText;
+		}
         fetch('index.txt')
         .then(response => response.text())
         .then(data => {
@@ -27,12 +35,10 @@
 					//let less = (parts[1].length <= 45)?(parts[1]):(parts[1].substring(0, 45) + "...");
                     row.insertCell(0).innerHTML = '<a target="_blank" href="' + parts[0] + '">' + whole + '</a>';
                     row.insertCell(1).innerHTML = parts[2];
-                    <!-- row.onclick = function() { -->
-                        <!-- window.location.href = parts[0]; -->
-                    <!-- } -->
                 }
             }
         });
+
     </script>
 	<style>
 		body{
