@@ -1,0 +1,12 @@
+C:\C#sourceCode\NotesManage\NotesManage\bin\Debug\NotesManage.exe.config
+C:\C#sourceCode\NotesManage\NotesManage\bin\Debug\NotesManage.exe
+C:\C#sourceCode\NotesManage\NotesManage\bin\Debug\NotesManage.pdb
+C:\C#sourceCode\NotesManage\NotesManage\bin\Debug\ICSharpCode.TextEditor.dll
+C:\C#sourceCode\NotesManage\NotesManage\obj\Debug\NotesManage.csproj.AssemblyReference.cache
+C:\C#sourceCode\NotesManage\NotesManage\obj\Debug\NotesManage.Form1.resources
+C:\C#sourceCode\NotesManage\NotesManage\obj\Debug\NotesManage.Properties.Resources.resources
+C:\C#sourceCode\NotesManage\NotesManage\obj\Debug\NotesManage.csproj.GenerateResource.cache
+C:\C#sourceCode\NotesManage\NotesManage\obj\Debug\NotesManage.csproj.CoreCompileInputs.cache
+C:\C#sourceCode\NotesManage\NotesManage\obj\Debug\NotesManage.csproj.CopyComplete
+C:\C#sourceCode\NotesManage\NotesManage\obj\Debug\NotesManage.exe
+C:\C#sourceCode\NotesManage\NotesManage\obj\Debug\NotesManage.pdb
