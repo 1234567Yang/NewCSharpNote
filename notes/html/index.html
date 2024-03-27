@@ -22,6 +22,8 @@
 		if (request.status === 200) {
 			document.getElementById("announcement").innerHTML = request.responseText;
 		}
+		//Event\F_Event.html|C# 事件 (Event) 详解|2023/6/5 0:00:00|blue|transparent
+		//目录|标题|时间|文本颜色|背景颜色
         fetch('index.txt')
         .then(response => response.text())
         .then(data => {
@@ -29,13 +31,15 @@
             let table = document.getElementById('noteTable');
             for(let line of lines) {
                 let parts = line.split('|');
-                if(parts.length == 3) {
+                if(parts.length == 5) {
                     let row = table.insertRow(-1);
 					//row.class = "notes-content";
 					row.classList.add("notes-content");
 					let whole = parts[1];
 					//let less = (parts[1].length <= 45)?(parts[1]):(parts[1].substring(0, 45) + "...");
-                    row.insertCell(0).innerHTML = '<a target="_blank" href="' + parts[0] + '">' + whole + '</a>';
+					let color = parts[3];
+					let bgcolor = parts[4];
+                    row.insertCell(0).innerHTML = '<a style = "color: ' + color + '; background: ' + bgcolor + '; " target="_blank" href="' + parts[0] + '">' + whole + '</a>';
                     row.insertCell(1).innerHTML = parts[2];
                 }
             }
@@ -60,7 +64,7 @@
 		.notes-content a{
 			position: relative;
 			display: block;
-			color: blue;
+			/*color: blue;*/
 			text-decoration: none;
 		}
 		.notes-content:hover {
