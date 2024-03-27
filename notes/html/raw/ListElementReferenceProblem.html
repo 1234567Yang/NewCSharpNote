@@ -1,0 +1,36 @@
+<p>C# 和 Java 的 <code>List</code>(<code>ArrayList</code>)在传递给另一个子程序的时候如果改变里面的元素，那么真正的List里面的元素也会改变。</p>
+<b>即使是Primitive type(如int, long, char)，也是传的地址。</b>
+<h3>也就是说<code>List</code>(<code>ArrayList</code>) 是保存的某个数据的地址！</h3>
+<p>所以如果你在子程序里面改变这个列表里面元素的话，它在外面也会变。</p>
+<b>但是！如果你是删除或者添加元素，在外面就不变，因为你在试图添加一个地址和删除一个地址。</b>
+
+<textarea class="codeTextarea">
+using System;
+using System.Collections.Generic;
+
+class HelloWorld {
+  static void Main() {
+    List<int> ls = new List<int>();
+    ls.Add(0);
+    ls.Add(1);
+    ls.Add(2);
+    test(ls);
+    foreach(int a in ls) Console.WriteLine(a);
+  }
+  public static void test(List<int> ls){
+      ls[0] = 999; //会变
+      ls.Add(3); //不会改变
+  }
+}
+</textarea>
+<p>输出：</p>
+<textarea class="outputTextarea">
+mono /tmp/aasuHgPQGb.exe
+999
+1
+2
+3
+
+=== Code Execution Successful ===
+</textarea>
+<b>这是AP CSA 必考考点！</b>

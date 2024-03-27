@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+        <meta name="keywords" content="C# List传参, Java ArrayList传参, List数据改变, List子程序调用">
+        <meta name="description" content="C#和Java List (ArrayList) 中的元素在另一个子程序改变时的情况，因为它们存储的是地址。">
+        <title>C#和Java List (ArrayList) 中的元素会在另一个子程序改变</title>
+
+        <link rel="icon" href="../../../static/image/favicon.ico">
+		
+		
+		
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4204717380896480"
+     crossorigin="anonymous"></script>
+
+     
+        <script type="text/javascript" src="../../../static/res/codemirror_6.65.7_codemirror.min.js"></script>
+        <script type="text/javascript" src="../../../static/res/codemirror_codemirror5_mode_clike_clike.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_6.65.7_codemirror.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_theme_ambiance.css">
+        
+
+        
+        <script type="text/javascript" src="../../../static/res/require_2.3.5_minified.js"></script>
+        <script type="text/javascript" src="../../../static/res/load.js"></script>
+        <script type="text/javascript">
+            window.onload = function() {
+                load();
+            }
+        </script>
+
+
+        <link rel="stylesheet" type="text/css" href="../../../static/res/model.css">
+    </head>
+    <body>
+        <div class="header header-footer">
+            <span id="header-hint">笔记 - C#和Java List (ArrayList) 中的元素会在另一个子程序改变</span>
+            <img src="../../../static/image/LanHua.png" id="header-img">
+        </div>
+		<br>
+		<br>
+        <br>
+		<p id="announcement"></p>
+        <div class="content">
+            <p>C# 和 Java 的 <code>List</code>(<code>ArrayList</code>)在传递给另一个子程序的时候如果改变里面的元素，那么真正的List里面的元素也会改变。</p>
+<b>即使是Primitive type(如int, long, char)，也是传的地址。</b>
+<h3>也就是说<code>List</code>(<code>ArrayList</code>) 是保存的某个数据的地址！</h3>
+<p>所以如果你在子程序里面改变这个列表里面元素的话，它在外面也会变。</p>
+<b>但是！如果你是删除或者添加元素，在外面就不变，因为你在试图添加一个地址和删除一个地址。</b>
+
+<textarea class="codeTextarea">
+using System;
+using System.Collections.Generic;
+
+class HelloWorld {
+  static void Main() {
+    List<int> ls = new List<int>();
+    ls.Add(0);
+    ls.Add(1);
+    ls.Add(2);
+    test(ls);
+    foreach(int a in ls) Console.WriteLine(a);
+  }
+  public static void test(List<int> ls){
+      ls[0] = 999; //会变
+      ls.Add(3); //不会改变
+  }
+}
+</textarea>
+<p>输出：</p>
+<textarea class="outputTextarea">
+mono /tmp/aasuHgPQGb.exe
+999
+1
+2
+3
+
+=== Code Execution Successful ===
+</textarea>
+<b>这是AP CSA 必考考点！</b>
+        </div>
+        <br>
+		
+		
+		
+        <div class="footer header-footer">
+            <span>Made by 1234567Yang</span>
+            <span><a href="../index.html">返回主页</a></span>
+            <span>
+                在<a href="https://github.com/1234567Yang/NewCSharpNote/">GitHub</a>上查看源代码
+            </span>
+        </div>
+    </body>
+</html>
