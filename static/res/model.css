@@ -51,6 +51,7 @@ html, body {
 	border-width: 1.5px;
 	border-style: dashed;
 	overflow:auto;
+	user-select: none;
 }
 .content{
     margin-top: calc(var(--head-height) + 50px);
