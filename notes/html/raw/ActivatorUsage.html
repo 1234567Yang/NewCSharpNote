@@ -1,0 +1,191 @@
+<p>C#之反射：</p>
+<p>举个例子，你有一个<code>List a</code>，如果你直接使用<code>var b = a</code>，那么你设置<code>b[0] = 3</code>的时候<code>a[0]</code>也会被设置成3，而深拷贝则会让它完全分开，效果类似<code>b = new List&lt;int&gt;()</code>。</p>
+<p>首先是最精简的代码：</p>
+<textarea class="codeTextarea">
+using System.Reflection;
+
+namespace ActivatorExample
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Car c = new Car();
+            var type = c.GetType();
+            object o = Activator.CreateInstance(type);
+            MethodInfo run = type.GetMethod("Run");
+            run.Invoke(o, null);
+        }
+    }
+    class Car
+    {
+        public Car()
+        {
+
+        }
+        public void Run()
+        {
+            Console.WriteLine("running");
+        }
+    }
+}
+</textarea>
+<p>输出：</p>
+<textarea class="outputTextarea">
+running
+
+按任意键关闭此窗口. . .
+</textarea>
+
+<b>那我们证明一下：</b>
+<textarea class="codeTextarea">
+using System.Reflection;
+
+namespace ActivatorExample
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Car c = new Car();
+            c.id = 100;
+            var type = c.GetType();
+            object o = Activator.CreateInstance(type);
+            MethodInfo run = type.GetMethod("Run");
+            run.Invoke(o, null);
+
+
+            FieldInfo idField = type.GetField("id");
+
+            Console.WriteLine("Reflection value before change: " + idField.GetValue(o));
+            
+            idField.SetValue(o, 1);
+            Console.WriteLine("Reflection value after change: " + idField.GetValue(o));
+            Console.WriteLine("Original value:" + c.id);
+            Car cpCar = c;
+            cpCar.id = 2;
+            Console.WriteLine("Original value but changed by another reference var: " + c.id);
+        }
+    }
+    class Car
+    {
+        public int id;
+        public Car()
+        {
+
+        }
+        public void Run()
+        {
+            Console.WriteLine("running");
+        }
+    }
+}
+</textarea>
+<textarea class="outputTextarea">
+running
+Reflection value before change: 0
+Reflection value after change: 1
+Original value:100
+Original value but changed by another reference var: 2
+
+按任意键关闭此窗口. . .
+</textarea>
+
+<b>可以看到经过反射的object是完全独立的，而直接赋值的object则会指向同一个物体。</b>
+<img class="img" alt="图解反射" src="reflection.png">
+
+<p>那假如我们一个方法有多个重载怎么办：</p>
+<textarea class="codeTextarea">
+using System.Reflection;
+
+namespace ActivatorExample
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Car c = new Car();
+            c.id = 100;
+            var type = c.GetType();
+            object o = Activator.CreateInstance(type);
+            MethodInfo run = type.GetMethod("Run", new Type[0]); //这里因为我们有两个Run method，如果不加上数组的话它会不知道我们究竟要run哪一个，就会报错
+            run.Invoke(o, null);
+        }
+    }
+    class Car
+    {
+        public int id;
+        public Car()
+        {
+
+        }
+        public Car(int id)
+        {
+            this.id = id;
+        }
+        public void Run()
+        {
+            Console.WriteLine("running");
+        }
+        public void Run(string name)
+        {
+            Console.WriteLine(name + " is running");
+        }
+    }
+}
+</textarea>
+<b>如果你想调用<code>Run(string name)</code>这个重载的话，可以改成<code>run.Invoke(o, 你的参数);</code></b>
+
+
+<p>获取所有的构造函数：</p>
+<textarea class="codeTextarea">
+using System.Reflection;
+
+namespace ActivatorExample
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Car c = new Car();
+            c.id = 100;
+            var type = c.GetType();
+            object o = Activator.CreateInstance(type);
+
+            ConstructorInfo[] con = type.GetConstructors();
+            foreach (ConstructorInfo c2 in con)
+            {
+                Console.WriteLine(c2);
+            }
+        }
+    }
+    class Car
+    {
+        public int id;
+        public Car()
+        {
+
+        }
+        public Car(int id)
+        {
+            this.id = id;
+        }
+        public void Run()
+        {
+            Console.WriteLine("running");
+        }
+        public void Run(string name)
+        {
+            Console.WriteLine(name + " is running");
+        }
+    }
+}
+</textarea>
+<p>输出：</p>
+
+<textarea class="outputTextarea">
+Void .ctor()
+Void .ctor(Int32)
+
+按任意键关闭此窗口. . .
+</textarea>
