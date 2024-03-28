@@ -14,4 +14,4 @@ SocketClientBasic\F_SocketClientBasic.html|C# 套接字 (Socket) 客户端详解
 SocketListenerBasic\F_SocketListenerBasic.html|C# 套接字监听 (SocketListene) 用法详解|2023/9/30 0:00:00|blue|transparent
 StackUsage\F_StackUsage.html|C# 堆 (Stack) 栈 (Queue) 用法详解|2023/9/29 0:00:00|blue|transparent
 YieldKeywordUsage\F_YieldKeywordUsage.html|C# 方法返回枚举 Yield 关键词用法详解|2023/9/29 0:00:00|blue|transparent
-ListElementReferenceProblem\F_ListElementReferenceProblem.html|C#和Java List (ArrayList) 中的元素会在另一个子程序改变|2024/3/27 23:16:41|blue|transparent
+ArrayElementReferenceProblem\F_ArrayElementReferenceProblem.html|C#和Java 数组中的元素会在另一个子程序改变|2024/3/28 0:24:16|blue|transparent

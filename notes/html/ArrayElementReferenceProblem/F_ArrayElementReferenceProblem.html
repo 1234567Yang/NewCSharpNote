@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+        <meta name="keywords" content="C#数组, C#数组改变, C#子程序数组">
+        <meta name="description" content="C#和Java 数组中的元素会在另一个子程序改变，因为数组储存的是数据的地址，即使是Primitive Type也会改变。">
+        <title>C#和Java 数组中的元素会在另一个子程序改变</title>
+
+        <link rel="icon" href="../../../static/image/favicon.ico">
+		
+		
+		
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4204717380896480"
+     crossorigin="anonymous"></script>
+
+     
+        <script type="text/javascript" src="../../../static/res/codemirror_6.65.7_codemirror.min.js"></script>
+        <script type="text/javascript" src="../../../static/res/codemirror_codemirror5_mode_clike_clike.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_6.65.7_codemirror.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_theme_ambiance.css">
+        
+
+        
+        <script type="text/javascript" src="../../../static/res/require_2.3.5_minified.js"></script>
+        <script type="text/javascript" src="../../../static/res/load.js"></script>
+        <script type="text/javascript">
+            window.onload = function() {
+                load();
+            }
+        </script>
+
+
+        <link rel="stylesheet" type="text/css" href="../../../static/res/model.css">
+    </head>
+    <body>
+        <div class="header header-footer">
+            <span id="header-hint">笔记 - C#和Java 数组中的元素会在另一个子程序改变</span>
+            <img src="../../../static/image/LanHua.png" id="header-img">
+        </div>
+		<br>
+		<br>
+        <br>
+		<p id="announcement"></p>
+        <div class="content">
+            <p>C# 和 Java 的 数组在传递给另一个子程序的时候如果改变里面的元素，那么真正的数组里面的元素也会改变。</p>
+<b>即使是Primitive type(如int, long, char)，也是传的地址。</b>
+<h3>也就是说数组是保存的某个数据的地址！</h3>
+<p>所以如果你在子程序里面改变这个列表里面元素的话，它在外面也会变。</p>
+<p>Java版本：</p>
+<textarea class="codeTextarea">
+public class Main {
+  public static void main(String[] args) {
+    int[] ls = new int[3];
+    ls[0] = 0;
+    ls[1] = 1;
+    ls[2] = 2;
+    test(ls);
+    for(int a : ls) System.out.println(a);
+  }
+  public static void test(int[] ls){
+      ls[0] = 99;
+  }
+}
+</textarea>
+<p>输出：</p>
+<textarea class="outputTextarea">
+99
+1
+2
+
+
+** Process exited - Return Code: 0 **
+</textarea>
+<br><br>
+<p>C#版本：</p>
+<textarea class="codeTextarea">
+using System;
+using System.Collections.Generic;
+public class Program {
+    public static void Main(string[] args) {
+        int[] ls = new int[3];
+        ls[0] = 0;
+        ls[1] = 1;
+        ls[2] = 2;
+        Test(ls);
+        foreach(int a in ls) {
+            Console.WriteLine(a);
+        }
+    }
+    public static void Test(int[] ls) {
+        ls[0] = 99;
+    }
+}
+</textarea>
+<p>输出：</p>
+<textarea class="outputTextarea">
+mono /tmp/3Gs51QLCVl.exe
+99
+1
+2
+
+=== Code Execution Successful ===
+</textarea>
+
+<b>这是AP CSA 必考考点！</b>
+<h3>不要和<code>List</code>(<code>ArrayList</code>)混淆：</h3>
+
+
+
+
+
+
+<p>Java版本：</p>
+<textarea class="codeTextarea">
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<Integer> ls = new ArrayList<Integer>();
+        ls.add(0);
+        ls.add(1);
+        ls.add(2);
+        test(ls);
+        for(int a : ls) System.out.println(a);
+    }
+    public static void test(ArrayList<Integer> ls){
+        ls.set(0, 999);
+        ls.add(3);
+    }
+}
+</textarea>
+<p>输出：</p>
+<textarea class="outputTextarea">
+999
+1
+2
+3
+
+
+** Process exited - Return Code: 0 **
+</textarea>
+<br><br>
+<p>C#版本：</p>
+<textarea class="codeTextarea">
+using System;
+using System.Collections.Generic;
+
+class HelloWorld {
+  static void Main() {
+    List<int> ls = new List<int>();
+    ls.Add(0);
+    ls.Add(1);
+    ls.Add(2);
+    test(ls);
+    foreach(int a in ls) Console.WriteLine(a);
+  }
+  public static void test(List<int> ls){
+      ls[0] = 999;
+      ls.Add(3);
+  }
+}
+</textarea>
+<p>输出：</p>
+<textarea class="outputTextarea">
+mono /tmp/ZZee2CVv4x.exe
+999
+1
+2
+3
+
+=== Code Execution Successful ===
+</textarea>
+
+        </div>
+        <br>
+		
+		
+		
+        <div class="footer header-footer">
+            <span>Made by 1234567Yang</span>
+            <span><a href="../index.html">返回主页</a></span>
+            <span>
+                在<a href="https://github.com/1234567Yang/NewCSharpNote/">GitHub</a>上查看源代码
+            </span>
+        </div>
+    </body>
+</html>
