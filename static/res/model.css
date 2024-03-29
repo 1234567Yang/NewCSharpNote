@@ -1,105 +1,172 @@
 :root {
-    --head-height: 50px;
-    --footer-height: 50px;
     --content-font-size: 20px;
+    --footer-height: 40px;
 }
-*{
+
+* {
     font-family: 'Courier New', 'Times New Roman', Courier, monospace;
 }
-html, body {
-    height: 100%;
+
+body {
+    min-height: 100vh;
 }
-.header-footer{
-    display: flex !important;
-    justify-content: space-between !important;
-    position: fixed;
-    left: 0px;
+
+
+.menu {
+    position: absolute;
     top: 0px;
+    left: 0px;
     width: 100%;
+}
 
-    background:rgb(220, 255, 195);
-    box-shadow: 0px 1px 10px 5px rgb(220, 255, 195);
+ul.menu,
+ul.footer{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
 
-    user-select: none;
-    
-    justify-content: center;
+ul.menu *,
+ul.footer *{
+    transition: opacity 0.3s, background-color 0.25s;
+}
+
+ul.menu li {
+    float: left;
+}
+
+ul.menu li a,
+ul.menu li span,
+ul.footer li a,
+ul.footer li span {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.menu li a:hover,
+ul.footer li a:hover,
+.drop-list:hover {
+    background-color: #111;
+}
+
+ul.menu .drop-detail {
+    visibility: hidden;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    opacity: 0;
+}
+
+ul.menu .drop-list:hover .drop-detail {
+    visibility: visible;
+    opacity: 1;
+}
+
+ul.menu .drop-detail a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+ul.menu .drop-detail a:hover {
+    background-color: #d0d0d0
+}
+
+.footer {
+    background-color: #333;
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    top: 100%;
+    margin: 0px;
+    margin-top: 30px !important;
+    padding: 0px;
+    height: 40px;
+    display: flex !important;
+    justify-content: space-around !important;
     align-items: center;
 
-    z-index: 50;
+    list-style-type: none;
 }
-.header{
-    height: var(--head-height);
+.footer li{
+    color:rgb(230,230,230);
 }
-#header-hint{
-    position: relative;
-    display: flex;
 
-    font-size: 30px;
-}
-#header-img{
+
+#announcement {
     position: relative;
-    right:10px;
-    width:auto;
-    height:100%;
+    width: 100%;
+    font-size: 15px;
+    background: rgb(255, 230, 230);
+    border-radius: 5px;
+    border-width: 1.5px;
+    border-style: dashed;
+    overflow: auto;
+    user-select: none;
 }
-#announcement{
-	position:relative;
-	width:100%;
-	font-size:15px;
-	background: rgb(255,200,200);
-	border-radius: 5px;
-	border-width: 1.5px;
-	border-style: dashed;
-	overflow:auto;
-	user-select: none;
-}
-.content{
-    margin-top: calc(var(--head-height) + 50px);
+
+.content {
     position: relative;
     font-size: var(--content-font-size);
     min-height: 100%;
 }
+
 .CodeMirror {
     font-size: calc(var(--content-font-size) - 4px);
     border: 1px solid #eee;
     margin: 8px;
 }
-code{
+
+code {
     position: relative;
     top: -1.6px;
     border-radius: 5px;
-    background-color: rgb(230,230,230);
+    background-color: rgb(230, 230, 230);
     border-width: 1.2px;
-    border-color: rgb(150,150,150);
+    border-color: rgb(150, 150, 150);
     border-style: solid;
     margin-left: 8px;
     margin-right: 8px;
     font-size: calc(var(--content-font-size) - 3px);
 }
-blockquote{
+
+blockquote {
     position: relative;
     border-width: 2px;
-    border-color: rgb(150,150,150);
+    border-color: rgb(150, 150, 150);
     border-style: dashed;
 }
-blockquote::before{
+
+blockquote::before {
     content: "";
     position: absolute;
     width: 5px;
     height: 100%;
-    background-color: rgb(150,150,150);
+    background-color: rgb(150, 150, 150);
 
     margin-left: -20px;
 }
-.img{ /*img class*/
+
+.img {
+    /*img class*/
     position: relative;
-    max-width:100%;
+    max-width: 100%;
     height: auto;
 }
-.imgboxer{
+
+.imgboxer {
     position: relative;
     display: flex;
-    justify-content:center;
+    justify-content: center;
     flex-wrap: wrap;
     /*
     border-radius: 5px;
@@ -108,16 +175,12 @@ blockquote::before{
     border-width: 1px;
     */
 }
-.footer{
-    position: relative;
-    margin-top: calc(var(--footer-height) * -1px);
-    height: var(--footer-height);
-}
 
-.bigFont{
+.bigFont {
     font-size: calc(1em + 8px);
     font-weight: bold;
 }
-.smallFont{
+
+.smallFont {
     font-size: calc(1em - 8px);
 }

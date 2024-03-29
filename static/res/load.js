@@ -1,7 +1,11 @@
 function load(){
     loadCodeHighlight();
     loadImage();
-    if(!isSpider()) loadAnnouncement();
+    if(!isSpider()){
+        loadHeader();
+        loadFooter();
+        loadAnnouncement();
+    }
     loadHintConsole();
 }
 function isSpider(){
@@ -52,6 +56,22 @@ function loadImage(){
         //a.src = path + "../img/" + a.src);
         a.outerHTML = "<div class='imgboxer'>" + a.outerHTML + "<div style='position:relative;width:100%;'></div>" + "<span style='color:rgb(150,150,150)'>" + a.alt + "</span>" + "</div>";
     }
+}
+function loadHeader(){
+    var request = new XMLHttpRequest();
+	request.open('GET', '../../../static/res/header.txt', false);
+	request.send(null);
+	if (request.status === 200) {
+		document.getElementById("header").outerHTML = request.responseText;
+	}
+}
+function loadFooter(){
+    var request = new XMLHttpRequest();
+	request.open('GET', '../../../static/res/footer.txt', false);
+	request.send(null);
+	if (request.status === 200) {
+		document.getElementById("footer").outerHTML = request.responseText;
+	}
 }
 function loadAnnouncement(){
 	var request = new XMLHttpRequest();

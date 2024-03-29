@@ -1,0 +1,4 @@
+<ul class="menu">
+  <li><a href="/indez.html">主页</a></li>
+</ul>
+<br><br>
