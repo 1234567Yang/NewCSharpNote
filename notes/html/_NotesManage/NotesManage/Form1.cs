@@ -63,6 +63,11 @@ namespace NotesManage
                     {
                         //Console.WriteLine("!!!");
                         int p1 = lineText.Substring(0, cursorPosInLine).LastIndexOf("<");
+                        while(IsInQuote(lineText, p1))
+                        {
+                            p1 = lineText.Substring(0, cursorPosInLine - p1).LastIndexOf("<");
+                            if (p1 == -1) return;
+                        }
                         string insert = lineText.Substring(p1 + 1, cursorPosInLine - p1 - 2);
                         //Console.WriteLine(insert);
                         if(insert.IndexOf("/") == -1)
