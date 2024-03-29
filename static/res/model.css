@@ -19,6 +19,9 @@ body {
     width: 100%;
 }
 
+ul.menu{
+    box-shadow: 0px 1px 3px black;
+}
 ul.menu,
 ul.footer{
     list-style-type: none;
@@ -83,7 +86,7 @@ ul.menu .drop-detail a:hover {
 
 .footer {
     background-color: #333;
-    position: absolute;
+    position: relative;
     left: 0px;
     width: 100%;
     top: 100%;
@@ -104,7 +107,7 @@ ul.menu .drop-detail a:hover {
 
 #announcement {
     position: relative;
-    width: 100%;
+    width: calc(100% - 80px * 2);
     font-size: 15px;
     background: rgb(255, 230, 230);
     border-radius: 5px;
@@ -112,8 +115,19 @@ ul.menu .drop-detail a:hover {
     border-style: dashed;
     overflow: auto;
     user-select: none;
+
+    margin-left: 80px;
+    margin-right: 80px;
 }
 
+#essay{
+    margin-left: 80px;
+    margin-right: 80px;
+}
+#title{
+    font-size: 35px;
+    background-color: rgb(230,230,230);
+}
 .content {
     position: relative;
     font-size: var(--content-font-size);
