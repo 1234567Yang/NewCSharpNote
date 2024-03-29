@@ -130,5 +130,28 @@ namespace NotesManage
             this.textEditorControl1.Text = "";
             
         }
+
+        private void button_gettitle_Click(object sender, EventArgs e)
+        {
+            string dir = this.textBox_html.Text.Substring(0, this.textBox_html.Text.IndexOf(".")) + "\\";
+            if(!File.Exists(dir + "F_" + this.textBox_html.Text))
+            {
+                MessageBox.Show("NOT EXISTS");
+                return;
+            }
+            string text = File.ReadAllText(dir + "F_" + this.textBox_html.Text);
+            string title = text.Substring(text.IndexOf("<title>") + "<title>".Length, text.IndexOf("</title>") - text.IndexOf("<title>") - "<title>".Length);
+            this.textBox_title.Text = title;
+
+
+            string before = "<meta name=\"description\" content=\"";
+            string after = "\">";
+            string des = text.Substring(text.IndexOf(before) + before.Length, text.IndexOf(after, text.IndexOf(before) + before.Length + 1) - text.IndexOf(before) - before.Length);
+            this.textBox_descrip.Text = des;
+
+            string keybefore = "<meta name=\"keywords\" content=\"";
+            string key = text.Substring(text.IndexOf(keybefore) + keybefore.Length, text.IndexOf(after, text.IndexOf(keybefore) + keybefore.Length + 1) - text.IndexOf(keybefore) - keybefore.Length);
+            this.textBox_keywords.Text = key;
+        }
     }
 }

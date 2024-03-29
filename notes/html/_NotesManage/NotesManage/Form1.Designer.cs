@@ -40,6 +40,7 @@
             this.textBox_model = new System.Windows.Forms.TextBox();
             this.textBox_color = new System.Windows.Forms.TextBox();
             this.textBox_bgcolor = new System.Windows.Forms.TextBox();
+            this.button_gettitle = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textEditorControl1
@@ -50,7 +51,7 @@
             this.textEditorControl1.IsReadOnly = false;
             this.textEditorControl1.Location = new System.Drawing.Point(12, 230);
             this.textEditorControl1.Name = "textEditorControl1";
-            this.textEditorControl1.Size = new System.Drawing.Size(598, 257);
+            this.textEditorControl1.Size = new System.Drawing.Size(700, 257);
             this.textEditorControl1.TabIndex = 0;
             // 
             // label1
@@ -144,11 +145,22 @@
             this.textBox_bgcolor.TabIndex = 13;
             this.textBox_bgcolor.Text = "transparent";
             // 
+            // button_gettitle
+            // 
+            this.button_gettitle.Location = new System.Drawing.Point(540, 63);
+            this.button_gettitle.Name = "button_gettitle";
+            this.button_gettitle.Size = new System.Drawing.Size(75, 23);
+            this.button_gettitle.TabIndex = 14;
+            this.button_gettitle.Text = "get";
+            this.button_gettitle.UseVisualStyleBackColor = true;
+            this.button_gettitle.Click += new System.EventHandler(this.button_gettitle_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(622, 535);
+            this.ClientSize = new System.Drawing.Size(724, 535);
+            this.Controls.Add(this.button_gettitle);
             this.Controls.Add(this.textBox_bgcolor);
             this.Controls.Add(this.textBox_color);
             this.Controls.Add(this.textBox_model);
@@ -183,6 +195,7 @@
         private System.Windows.Forms.TextBox textBox_model;
         private System.Windows.Forms.TextBox textBox_color;
         private System.Windows.Forms.TextBox textBox_bgcolor;
+        private System.Windows.Forms.Button button_gettitle;
     }
 }
 
