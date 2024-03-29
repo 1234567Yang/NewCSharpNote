@@ -28,3 +28,5 @@ response.OutputStream.Write(buffer, 0, buffer.Length);
 
 
 <b>坑！要先写入Header。</b>
+
+<b>除此之外，如果你用的是Cloudflare tunnle，且你添加的是CORS协议头（如果是添加其它协议头，如<code>X</code>、<code>POSITION</code>这种自定义的，经过测试可以添加），那么你应该在Dashboard设置，而不是直接自己添加进去。</b>
