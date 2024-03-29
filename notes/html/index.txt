@@ -11,7 +11,7 @@ LibraryCompile\F_LibraryCompile.html|C# 类库 (Library) 不兼容的问题。|2
 NetworkBasic\F_NetworkBasic.html|简单易懂的网络基础（学C#网络前必学），什么是DNS解析，什么是网关。|2023/9/30 0:00:00|blue|transparent
 ScreenshotBasic\F_ScreenshotBasic.html|C#屏幕截图，获取/设置图片像素，C#获取缩略图（图片压缩）和LockBits|2023/10/14 0:00:00|blue|transparent
 SocketClientBasic\F_SocketClientBasic.html|C# 套接字 (Socket) 客户端详解， C# Socket 发送接收数据|2023/9/30 0:00:00|blue|transparent
-SocketListenerBasic\F_SocketListenerBasic.html|C# 套接字监听 (SocketListene) 用法详解|2023/9/30 0:00:00|blue|transparent
+SocketListenerBasic\F_SocketListenerBasic.html|C# 套接字监听 (SocketListener) 用法详解|2023/9/30 0:00:00|blue|transparent
 StackUsage\F_StackUsage.html|C# 堆 (Stack) 栈 (Queue) 用法详解|2023/9/29 0:00:00|blue|transparent
 YieldKeywordUsage\F_YieldKeywordUsage.html|C# 方法返回枚举 Yield 关键词用法详解|2023/9/29 0:00:00|blue|transparent
 ArrayElementReferenceProblem\F_ArrayElementReferenceProblem.html|C#和Java 数组中的元素会在另一个子程序改变|2024/3/28 0:24:16|blue|transparent
