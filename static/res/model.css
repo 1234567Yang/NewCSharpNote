@@ -107,7 +107,7 @@ ul.menu .drop-detail a:hover {
 
 #announcement {
     position: relative;
-    width: calc(100% - 80px * 2);
+    width: calc(60%);
     font-size: 15px;
     background: rgb(255, 230, 230);
     border-radius: 5px;
@@ -116,17 +116,20 @@ ul.menu .drop-detail a:hover {
     overflow: auto;
     user-select: none;
 
-    margin-left: 80px;
-    margin-right: 80px;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 #essay{
-    margin-left: 80px;
-    margin-right: 80px;
+    background-color: rgb(245,245,245);
+    border-radius: 3px;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 #title{
     font-size: 35px;
-    background-color: rgb(230,230,230);
+    border-radius: 3px;
+    background-color: rgb(220,220,220);
 }
 .content {
     position: relative;
