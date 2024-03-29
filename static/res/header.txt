@@ -1,5 +1,6 @@
 <ul class="menu">
   <li><img src="/static/image/logo.png" style="height:50px;width:auto"></li>
   <li><a href="/index.html">主页</a></li>
+  <li><a href="mailto:admin@lhyang.shop">联系我</a></li>
 </ul>
 <br><br>
