@@ -16,3 +16,8 @@ SocketListenerBasic\F_SocketListenerBasic.html|C#套接字监听SocketListene用
 StackUsage\F_StackUsage.html|C#堆Stack栈Queue用法详解，C#堆栈数据结构用法|2023/9/29 0:00:00|blue|transparent
 YieldKeywordUsage\F_YieldKeywordUsage.html|C#方法返回枚举Yield关键词用法详解|2023/9/29 0:00:00|blue|transparent
 ActivatorUsage\F_ActivatorUsage.html|C#反射用法详解，创建反射Object，调用方法，获取变量，获取构造函数|2024/3/28 4:46:49|blue|transparent
+ISharpCodeTextEditorAutoCompleteHTML\F_ISharpCodeTextEditorAutoCompleteHTML.html|C#代码编辑器ISharpCodeTextEditor高亮文本加自动补全HTML，并带有各种引号和属性情况判断|2024/3/29 23:58:25|blue|transparent
+ISharpCodeTextEditorAutoCompleteHTML\F_ISharpCodeTextEditorAutoCompleteHTML.html|C#代码编辑器ISharpCodeTextEditor高亮文本加自动补全HTML，并带有各种引号和属性情况判断|2024/3/29 23:59:11|blue|transparent
+ISharpCodeTextEditorAutoCompleteHTML\F_ISharpCodeTextEditorAutoCompleteHTML.html|C#代码编辑器ISharpCodeTextEditor高亮文本加自动补全HTML，并带有各种引号和属性情况判断|2024/3/30 0:00:02|blue|transparent
+ISharpCodeTextEditorAutoCompleteHTML\F_ISharpCodeTextEditorAutoCompleteHTML.html|C#代码编辑器ISharpCodeTextEditor高亮文本加自动补全HTML，并带有各种引号和属性情况判断|2024/3/30 0:03:23|blue|transparent
+ISharpCodeTextEditorAutoCompleteHTML\F_ISharpCodeTextEditorAutoCompleteHTML.html|C#代码编辑器ISharpCodeTextEditor高亮文本加自动补全HTML，并带有各种引号和属性情况判断|2024/3/30 0:05:48|blue|transparent

@@ -1,0 +1,160 @@
+<p>最近在用<code>ISharpCode.TextEditor</code>做了个东西，但是发现网上似乎还没有用这个做的HTML自动补全，于是我做了个简单的。</p>
+<p>先是从网上搜到了<a href="https://stackoverflow.com/questions/60388278/how-to-auto-complete-a-tag-with-icsharpcode-texteditor-component">这篇</a>Stackoverflow的文章，但是没想到人家是用正常的<code>RichTextbox</code>做的，虽然思路相似，但是无法直接搬过来用。这个最佳答案也不知道怎么选的。</p>
+<p>那我们自己写一个：</p>
+<b>先是它的初始化，我们用它的<code>KeyUp</code>事件，这个最简单，但是也有坑！</b>
+<textarea class="codeTextarea">
+textEditorControl1.ShowEOLMarkers = false;
+textEditorControl1.ShowHRuler = false;
+textEditorControl1.ShowInvalidLines = false;
+textEditorControl1.ShowMatchingBracket = true;
+textEditorControl1.ShowSpaces = false;
+textEditorControl1.ShowTabs = false;
+textEditorControl1.ShowVRuler = false;
+textEditorControl1.AllowCaretBeyondEOL = false;
+textEditorControl1.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("HTML");
+textEditorControl1.Encoding = Encoding.UTF8;
+textEditorControl1.ActiveTextAreaControl.TextArea.KeyUp += new System.Windows.Forms.KeyEventHandler(textEditorControl1_KeyUp);
+</textarea>
+<b>如果你仔细看过代码就不免有疑问，为什么我要代码手动去绑定<code>KeyUp</code>这个事件？直接窗口事件那里绑定不久好了？</b>
+<br>
+<b>答：我绑定的是<code>textEditorControl1.ActiveTextAreaControl.TextArea</code>，它这个组件是由三个分组件组成的，如果你去窗口那里绑定，会失效。当时调试了好久才发现这个问题。</b>
+<br>
+<br>
+<p>第一代：最简单的版本：</p>
+
+<textarea class="codeTextarea">
+private void textEditorControl1_KeyUp(object sender, KeyEventArgs e)
+{
+    if(e.KeyCode == Keys.ShiftKey || e.KeyCode == Keys.ControlKey || e.KeyCode == Keys.Alt)
+    {
+        return;
+    }
+    //textEditorControl1.ActiveTextAreaControl.SelectionManager.SelectedText;
+    int pos = textEditorControl1.Document.PositionToOffset(textEditorControl1.ActiveTextAreaControl.Caret.Position);
+    int lineIndex = textEditorControl1.ActiveTextAreaControl.Caret.Position.Line;
+    // 获取当前行的 LineSegment
+    var lineSegment = textEditorControl1.Document.GetLineSegment(lineIndex);
+    // 使用 Document.GetText 方法获取行的文本
+    string lineText = textEditorControl1.Document.GetText(lineSegment.Offset, lineSegment.Length);
+    int cursorPosInLine = textEditorControl1.ActiveTextAreaControl.Caret.Offset - lineSegment.Offset;
+
+    //Console.WriteLine(pos);
+    if (cursorPosInLine > 0 && lineText.Substring(cursorPosInLine - 1, 1) == ">")
+    {
+        // 获取当前行的索引
+        
+        if(lineText.Substring(0, cursorPosInLine).IndexOf("<") != -1)
+        {
+                //Console.WriteLine("!!!");
+                int p1 = lineText.Substring(0, cursorPosInLine).LastIndexOf("<");
+                string insert = lineText.Substring(p1 + 1, cursorPosInLine - p1 - 2);
+                //Console.WriteLine(insert);
+                    insert = "</" + insert + ">";
+                    textEditorControl1.Document.Insert(textEditorControl1.ActiveTextAreaControl.Caret.Offset, insert);
+        }
+    }
+}
+</textarea>
+<p>首先我们先判断是不是按的功能键，如果是的话直接返回。为啥呢？看下面不放判断代码的GIF：</p>
+<img class="img" alt="不放判断功能键的情况" src="situationWithoutDetermine.gif" loop="true">
+<p>只会我们判断它输入的是不是<code>&gt;</code>，如果是，就自动补全</p>
+<p>但是问题也随之而来，见下面的GIF：</p>
+<img class="img" alt="第一代的问题" src="v1problem.gif" loop="true">
+<b>这个问题很好解决，我们只需要在获取的HTML标签里面看看有没有<code>/</code>就行了：</b>
+<textarea class="codeTextarea">
+if(insert.IndexOf("/") == -1)
+{
+    insert = "</" + insert.Substring(0, (insert.IndexOf(" ") != -1)? insert.IndexOf(" "):insert.Length) + ">";
+    textEditorControl1.Document.Insert(textEditorControl1.ActiveTextAreaControl.Caret.Offset, insert);
+}
+</textarea>
+<p>如果没有，再添加；如果有了，就不添加了。</p>
+<p>这里我还考虑了一些其它的问题，比如如果一个用户正在输入类似于<code>class = "XXX"</code>这种情况，然后再闭合这个标签，但是他输入的时候使用了<code>&gt;</code>怎么办呢？那样子的话整个会直接自动闭合。</p>
+<b>解决方案：判断这一行前面的<code>"</code>数量：如果数量为奇数，那么他正在引号内输入文本，如果为偶数，则已经闭合：</b>
+<textarea class="codeTextarea">
+private bool IsInQuote(string text, int pos)
+{
+    string before = text.Substring(0, pos);
+    return before.Count(c => c == '\"') % 2 != 0;
+}
+</textarea>
+<p>那么一个新的问题会随之而来：他输入了这些属性，我们闭合的时候按照之前的代码会出现类似于以下GIF的效果</p>
+<img class="img" alt="第一代的问题" src="v2problem.gif" loop="true">
+<b>解决方案也很简单：我们试图寻找它第一个空格，如果找到就substring一下。</b>
+<textarea class="codeTextarea">
+insert = "</" + insert.Substring(0, (insert.IndexOf(" ") != -1)? insert.IndexOf(" "):insert.Length) + ">";
+</textarea>
+<b>同时，我们也要防止他输入的属性里面有<code>&lt;</code>干扰我们判断Tag是什么。</b>
+<textarea class="codeTextarea">
+int p1 = lineText.Substring(0, cursorPosInLine).LastIndexOf("<");
+while(IsInQuote(lineText, p1))
+{
+    p1 = lineText.Substring(0, cursorPosInLine - p1).LastIndexOf("<");
+    if (p1 == -1) return;
+}
+</textarea>
+<b>至于那些特殊的不需要补全HTML标签，如<code>&lt;br&gt;</code>和<code>&lt;input&gt;</code>，如果有需要可以自己添加一句判断是否为这些元素。</b>
+<br>
+<b>那么到这里，我们的一个简单的HTML自动补全就做好了！完整代码见下：</b>
+<p>GIF效果：</p>
+<img class="img" alt="最终效果" src="final.gif" loop="true">
+
+<b>窗口绑定：</b>
+<textarea class="codeTextarea">
+textEditorControl1.ShowEOLMarkers = false;
+textEditorControl1.ShowHRuler = false;
+textEditorControl1.ShowInvalidLines = false;
+textEditorControl1.ShowMatchingBracket = true;
+textEditorControl1.ShowSpaces = false;
+textEditorControl1.ShowTabs = false;
+textEditorControl1.ShowVRuler = false;
+textEditorControl1.AllowCaretBeyondEOL = false;
+textEditorControl1.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("HTML");
+textEditorControl1.Encoding = Encoding.UTF8;
+textEditorControl1.ActiveTextAreaControl.TextArea.KeyUp += new System.Windows.Forms.KeyEventHandler(textEditorControl1_KeyUp);
+</textarea>
+<b>事件处理：</b>
+<textarea class="codeTextarea">
+private void textEditorControl1_KeyUp(object sender, KeyEventArgs e)
+{
+    if(e.KeyCode == Keys.ShiftKey || e.KeyCode == Keys.ControlKey || e.KeyCode == Keys.Alt)
+    {
+        return;
+    }
+    //textEditorControl1.ActiveTextAreaControl.SelectionManager.SelectedText;
+    int pos = textEditorControl1.Document.PositionToOffset(textEditorControl1.ActiveTextAreaControl.Caret.Position);
+    int lineIndex = textEditorControl1.ActiveTextAreaControl.Caret.Position.Line;
+    // 获取当前行的 LineSegment
+    var lineSegment = textEditorControl1.Document.GetLineSegment(lineIndex);
+    // 使用 Document.GetText 方法获取行的文本
+    string lineText = textEditorControl1.Document.GetText(lineSegment.Offset, lineSegment.Length);
+    int cursorPosInLine = textEditorControl1.ActiveTextAreaControl.Caret.Offset - lineSegment.Offset;
+
+    //Console.WriteLine(pos);
+    if (cursorPosInLine > 0 && lineText.Substring(cursorPosInLine - 1, 1) == ">")
+    {
+        // 获取当前行的索引
+        
+        if(lineText.Substring(0, cursorPosInLine).IndexOf("<") != -1)
+        {
+            if(!IsInQuote(lineText, cursorPosInLine))
+            {
+                //Console.WriteLine("!!!");
+                int p1 = lineText.Substring(0, cursorPosInLine).LastIndexOf("<");
+                while(IsInQuote(lineText, p1))
+                {
+                    p1 = lineText.Substring(0, cursorPosInLine - p1).LastIndexOf("<");
+                    if (p1 == -1) return;
+                }
+                string insert = lineText.Substring(p1 + 1, cursorPosInLine - p1 - 2);
+                //Console.WriteLine(insert);
+                if(insert.IndexOf("/") == -1)
+                {
+                    insert = "</" + insert.Substring(0, (insert.IndexOf(" ") != -1)? insert.IndexOf(" "):insert.Length) + ">";
+                    textEditorControl1.Document.Insert(textEditorControl1.ActiveTextAreaControl.Caret.Offset, insert);
+                }
+            }
+        }
+    }
+}
+</textarea>
