@@ -79,7 +79,7 @@ private bool IsInQuote(string text, int pos)
 }
 </textarea>
 <p>那么一个新的问题会随之而来：他输入了这些属性，我们闭合的时候按照之前的代码会出现类似于以下GIF的效果</p>
-<img class="img" alt="第一代的问题" src="v2problem.gif" loop="true">
+<img class="img" alt="第二代的问题" src="v2problem.gif" loop="true">
 <b>解决方案也很简单：我们试图寻找它第一个空格，如果找到就substring一下。</b>
 <textarea class="codeTextarea">
 insert = "</" + insert.Substring(0, (insert.IndexOf(" ") != -1)? insert.IndexOf(" "):insert.Length) + ">";
