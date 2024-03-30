@@ -1,5 +1,5 @@
 <p>C#Mouse hook鼠标全局钩子的思路和代码：</p>
-<p>思路：先添加了四个<code>Event</code>，用于处理被Hook的鼠标的不同操作：分别是鼠标左键和右键的按下和松开。如果需要滚轮的事件可以自己添加进去。</p>
+<p>思路：先添加了四个鼠标钩子事件，用于处理被Hook的鼠标的不同操作：分别是鼠标左键和右键的按下和松开。如果需要滚轮的事件可以自己添加进去。</p>
 <br>
 <p>我们可以通过<code>GetModuleHandle</code>获取Windows系统内存中<code>user32.dll</code>的地址，并且设置一个鼠标钩子（<code>WH_MOUSE</code>值7或者<code>WH_MOUSE_LL</code>值14，第一个只记录本进程内的接收鼠标事件，第二个就是全局钩子了。）。</p>
 <br>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="keywords" content="C#鼠标钩子, C#鼠标全局钩子, 屏蔽鼠标事件, 鼠标钩子, C#SetWindowsHookEx">
     <meta name="description" content="C#设置Win11可用鼠标全局钩子，以及设置鼠标钩子后如何屏蔽掉鼠标事件（防止事件继续向下传递）">
-    <title>C#设置Win11可用鼠标全局钩子，以及设置鼠标钩子后如何屏蔽掉鼠标事件（防止事件继续向下传递）</title>
+    <title>C#设置Win11可用鼠标全局钩子，设置鼠标钩子后屏蔽鼠标</title>
 
     <link rel="icon" href="../../../static/image/favicon.ico">
 
@@ -43,7 +43,7 @@
 
     <div id="essay">
         <div id="title">
-            <span id="title-name">C#设置Win11可用鼠标全局钩子，以及设置鼠标钩子后如何屏蔽掉鼠标事件（防止事件继续向下传递）</span>
+            <span id="title-name">C#设置Win11可用鼠标全局钩子，设置鼠标钩子后屏蔽鼠标</span>
         </div>
         <div id="extension-title"></div>
         <br>
@@ -51,7 +51,7 @@
         <br>
         <div class="content">
             <p>C#Mouse hook鼠标全局钩子的思路和代码：</p>
-<p>思路：先添加了四个<code>Event</code>，用于处理被Hook的鼠标的不同操作：分别是鼠标左键和右键的按下和松开。如果需要滚轮的事件可以自己添加进去。</p>
+<p>思路：先添加了四个鼠标钩子事件，用于处理被Hook的鼠标的不同操作：分别是鼠标左键和右键的按下和松开。如果需要滚轮的事件可以自己添加进去。</p>
 <br>
 <p>我们可以通过<code>GetModuleHandle</code>获取Windows系统内存中<code>user32.dll</code>的地址，并且设置一个鼠标钩子（<code>WH_MOUSE</code>值7或者<code>WH_MOUSE_LL</code>值14，第一个只记录本进程内的接收鼠标事件，第二个就是全局钩子了。）。</p>
 <br>
