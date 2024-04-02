@@ -19,3 +19,4 @@ ActivatorUsage\F_ActivatorUsage.html|C#反射用法详解，创建反射Object�
 ISharpCodeTextEditorAutoCompleteHTML\F_ISharpCodeTextEditorAutoCompleteHTML.html|C#代码编辑器ISharpCodeTextEditor高亮文本加自动补全HTML，并带有各种引号和属性情况判断|2024/3/30 0:05:48|OrangeRed|transparent
 MouseHook\F_MouseHook.html|C#设置Win11可用鼠标全局钩子，设置鼠标钩子后屏蔽鼠标|2024/3/30 5:31:16|OrangeRed|transparent
 ChatDatabaseIdeas\F_ChatDatabaseIdeas.html|好友聊天数据库私聊索引思路|2024/3/30 20:26:30|blue|transparent
+WPFShowErrorAfterRenameComponent\F_WPFShowErrorAfterRenameComponent.html|WPF自定义组件在修改名字后其它窗口报错的解决方案|2024/4/2 17:51:26|blue|transparent

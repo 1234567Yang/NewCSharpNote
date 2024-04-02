@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="WPF custom component, WPF自定义组件, WPF自定义组件改名报错">
+    <meta name="description" content="WPF自定义组件在修改名字后其它窗口报错的解决方案，local找不到指定组件">
+    <title>WPF自定义组件在修改名字后其它窗口报错的解决方案</title>
+
+    <link rel="icon" href="../../../static/image/favicon.ico">
+
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4204717380896480"
+        crossorigin="anonymous"></script>
+
+
+    <script type="text/javascript" src="../../../static/res/codemirror_6.65.7_codemirror.min.js"></script>
+    <script type="text/javascript" src="../../../static/res/codemirror_codemirror5_mode_clike_clike.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_6.65.7_codemirror.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_theme_ambiance.css">
+
+
+
+    <script type="text/javascript" src="../../../static/res/require_2.3.5_minified.js"></script>
+    <script type="text/javascript" src="../../../static/res/load.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            load();
+        }
+    </script>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../static/res/model.css">
+</head>
+
+<body>
+    <div id="header"></div>
+    <p id="announcement"></p>
+    <div id="extension-header"></div>
+
+
+
+    <div id="essay">
+        <div id="title">
+            <span id="title-name">WPF自定义组件在修改名字后其它窗口报错的解决方案</span>
+        </div>
+        <div id="extension-title"></div>
+        <br>
+
+        <br>
+        <div class="content">
+            <p>今天遇到一个WPF的问题，就是你如果创建了一个自定义控件，然后把它重命名，之后如果你另一个窗口调用了它，即使你改成新名称，也会出现类似下图的错误：</p>
+<img class="img" alt="提示找不到组件的错误" src="error.jpg" loop="true">
+<p>然后尝试过了重启vs2022，也没用。如果改回去名字就又好了。</p>
+<b>解决方案：不用管它的错误，直接点运行，编译器不会报错。结束运行之后就好了！</b>
+        </div>
+        <div id="extension-content"></div>
+    </div>
+    <br>
+
+
+    <div id="extension-footer"></div>
+    <div id="footer"></div>
+</body>
+
+</html>
