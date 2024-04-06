@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="重写和多态, C#和Java重写多态区别">
+    <meta name="description" content="C#和Java的重写与多态的区别，C#和Java重写最详细对比，C#和Java重写的不同，多态子类成员调用父类时父类方法会找到最新的方法。">
+    <title>C#和Java的重写与多态的区别，C#和Java重写最详细对比</title>
+
+    <link rel="icon" href="../../../static/image/favicon.ico">
+
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4204717380896480"
+        crossorigin="anonymous"></script>
+
+
+    <script type="text/javascript" src="../../../static/res/codemirror_6.65.7_codemirror.min.js"></script>
+    <script type="text/javascript" src="../../../static/res/codemirror_codemirror5_mode_clike_clike.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_6.65.7_codemirror.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/res/codemirror_theme_ambiance.css">
+
+
+
+    <script type="text/javascript" src="../../../static/res/require_2.3.5_minified.js"></script>
+    <script type="text/javascript" src="../../../static/res/load.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            load();
+        }
+    </script>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../static/res/model.css">
+</head>
+
+<body>
+    <div id="header"></div>
+    <p id="announcement"></p>
+    <div id="extension-header"></div>
+
+
+
+    <div id="essay">
+        <div id="title">
+            <span id="title-name">C#和Java的重写与多态的区别，C#和Java重写最详细对比</span>
+        </div>
+        <div id="extension-title"></div>
+        <br>
+
+        <br>
+        <div class="content">
+            <p>C#和Java的重写与多态，最详细对比相似和不同：</p>
+<p>重写(Override)就是一个base的方法被它的子类重新定义，在调用子类那个方法的时候你会调用子类的那个方法，而不是父类的。</p>
+<b>重点来了：在Java里面重写的标志<code>@Override</code>只是为了防止你拼错父类的名称，而C#就不一样了，如果你不写重写关键字，你又用父类变量创建了一个子类，那么它会调用父类的那个没被重写的方法，而不是你子类那个方法。</b>
+<p>多态(Polymorphism)就是用父类变量声明子类实例。</p>
+<p>输出相同的代码：</p>
+<table border="1">
+    <tr>
+        <td>
+            <textarea class="codeTextarea">
+using System;
+        
+public class HelloWorld
+{
+    public static void Main(string[] args)
+    {
+        Child c = new Child();
+        c.first();
+        
+        Father f = new Father();
+        f.first();
+        
+        Father fc = new Child();
+        fc.first();
+    }
+}
+class Child : Father{
+    public override void first(){
+        Console.WriteLine("child's first method");
+        second();
+    }
+    public void second(){
+        Console.WriteLine("child's second method");
+    }
+}
+class Father{
+    public virtual void first(){
+        Console.WriteLine("father's first method");
+        second();
+    }
+    public void second(){
+        Console.WriteLine("father's second method");
+    }
+}
+            </textarea>
+        </td>
+        <td>
+            <textarea class="codeTextarea">
+public class Main {
+    public static void main(String[] args) {
+        Child c = new Child();
+        c.first();
+        
+        Father f = new Father();
+        f.first();
+        
+        Father fc = new Child();
+        fc.first();
+    }
+}
+
+class Child extends Father {
+    @Override
+    public void first() {
+        System.out.println("child's first method");
+        second();
+    }
+    public void second() {
+        System.out.println("child's second method");
+    }
+}
+
+class Father {
+    public void first() {
+        System.out.println("father's first method");
+        second();
+    }
+
+    public void second() {
+        System.out.println("father's second method");
+    }
+}
+            </textarea>
+        </td>
+    </tr>
+</table>
+<p>它们都输出：</p>
+<textarea class="outputTextarea">
+child's first method
+child's second method
+father's first method
+father's second method
+child's first method
+child's second method
+</textarea>
+
+
+<b>但是如果我们把<code>override</code>关键词去掉，效果可就不一样了：</b>
+<table border="1">
+    <tr>
+        <td>
+            <textarea class="codeTextarea">
+using System;
+
+public class HelloWorld
+{
+    public static void Main(string[] args)
+    {
+        Child c = new Child();
+        c.first();
+        
+        Father f = new Father();
+        f.first();
+        
+        Father fc = new Child();
+        fc.first();
+    }
+}
+class Child : Father{
+    public void first(){
+        Console.WriteLine("child's first method");
+        second();
+    }
+    public void second(){
+        Console.WriteLine("child's second method");
+    }
+}
+class Father{
+    public void first(){
+        Console.WriteLine("father's first method");
+        second();
+    }
+    public void second(){
+        Console.WriteLine("father's second method");
+    }
+}
+            </textarea>
+        </td>
+        <td>
+            <textarea class="codeTextarea">
+public class Main {
+    public static void main(String[] args) {
+        Child c = new Child();
+        c.first();
+        
+        Father f = new Father();
+        f.first();
+        
+        Father fc = new Child();
+        fc.first();
+    }
+}
+
+class Child extends Father {
+    public void first() {
+        System.out.println("child's first method");
+        second();
+    }
+    public void second() {
+        System.out.println("child's second method");
+    }
+}
+
+class Father {
+    public void first() {
+        System.out.println("father's first method");
+        second();
+    }
+
+    public void second() {
+        System.out.println("father's second method");
+    }
+}
+
+            </textarea>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <textarea class="outputTextarea">
+child's first method
+child's second method
+father's first method
+father's second method
+father's first method
+father's second method
+            </textarea>
+        </td>
+        <td>
+            <textarea class="outputTextarea">
+child's first method
+child's second method
+father's first method
+father's second method
+child's first method
+child's second method
+            </textarea>
+        </td>
+    </tr>
+</table>
+
+<p>我们继续继承</p>
+<table border="1">
+    <tr>
+        <td>
+            <textarea class="codeTextarea">
+using System;
+
+public class HelloWorld
+{
+    public static void Main(string[] args)
+    {
+        Father fcc = new ChildChild();
+        fcc.first();
+    }
+}
+class ChildChild : Child{
+    public override void first(){
+        Console.WriteLine("childchild's first method");
+        second();
+    }
+    public void second(){
+        Console.WriteLine("childchild's second method");
+    }
+}
+class Child : Father{
+    public override void first(){
+        Console.WriteLine("child's first method");
+        second();
+    }
+    public void second(){
+        Console.WriteLine("child's second method");
+    }
+}
+class Father{
+    public virtual void first(){
+        Console.WriteLine("father's first method");
+        second();
+    }
+    public void second(){
+        Console.WriteLine("father's second method");
+    }
+}
+            </textarea>
+        </td>
+        <td>
+            <textarea class="codeTextarea">
+public class Main {
+    public static void main(String[] args) {
+        Father fcc = new ChildChild();
+        fcc.first();
+    }
+}
+
+class ChildChild extends Child {
+    @Override
+    public void first() {
+        System.out.println("childchild's first method");
+        second();
+    }
+    public void second() {
+        System.out.println("childchild's second method");
+    }
+}
+
+class Child extends Father {
+    @Override
+    public void first() {
+        System.out.println("child's first method");
+        second();
+    }
+    public void second() {
+        System.out.println("child's second method");
+    }
+}
+
+class Father {
+    public void first() {
+        System.out.println("father's first method");
+        second();
+    }
+    public void second() {
+        System.out.println("father's second method");
+    }
+}
+
+            </textarea>
+        </td>
+    </tr>
+</table>
+<p>它们都输出：</p>
+<textarea class="outputTextarea">
+childchild's first method
+childchild's second method
+</textarea>
+
+<b>但是如果我们把<code>ChildChild</code>的<code>override</code>去掉：</b>
+<textarea class="codeTextarea">
+using System;
+
+public class HelloWorld
+{
+    public static void Main(string[] args)
+    {
+        Father fcc = new ChildChild();
+        fcc.first();
+    }
+}
+class ChildChild : Child{
+    public void first(){
+        Console.WriteLine("childchild's first method");
+        second();
+    }
+    public void second(){
+        Console.WriteLine("childchild's second method");
+    }
+}
+class Child : Father{
+    public override void first(){
+        Console.WriteLine("child's first method");
+        second();
+    }
+    public void second(){
+        Console.WriteLine("child's second method");
+    }
+}
+class Father{
+    public virtual void first(){
+        Console.WriteLine("father's first method");
+        second();
+    }
+    public void second(){
+        Console.WriteLine("father's second method");
+    }
+}
+</textarea>
+<textarea class="outputTextarea">
+child's first method
+child's second method
+</textarea>
+<p>它竟然输出Child的版本！</p>
+<blockquote cite="www.youtube.com/watch?v=_WTb8lFLPAU">
+因为它是顺着继承链找的，当它从<code>Father</code>开始向上找最新版本的时候，它找到<code>Child</code>就找不到最新的版本了，所以就输出<code>Child</code>的版本。
+</blockquote>
+<p>而Java中就非常人性化，由于是加不加<code>@Override</code>都一样，所以它总会输出<code>ChildChild</code>版本</p>
+
+<p>最恶心的版本：</p>
+<textarea class="codeTextarea">
+public class Main {
+    public static void main(String[] args) {
+        Father fc = new Child();
+        fc.first();
+    }
+
+}
+
+class Father {
+    public void first() {
+        System.out.println("father's first method");
+        second();
+    }
+
+    public void second() {
+        System.out.println("father's second method");
+    }
+}
+
+class Child extends Father {
+    public void first() {
+        super.first();
+        System.out.println("child's first method");
+    }
+
+    public void second() {
+        super.second();
+        System.out.println("child's second method");
+    }
+}
+</textarea>
+<p>输出：</p>
+<textarea class="outputTextarea">
+father's first method
+father's second method
+child's second method
+child's first method
+</textarea>
+
+<b>它在运行之后调用<code>Child</code>的<code>First</code>方法，但是里面调用了<code>super</code>，也就是再去调用<code>Father</code>的<code>First</code>方法，然后<code>Father</code>里面有个<code>Second</code>方法，不过它会去寻找最新的<code>Second</code>方法，于是就到了<code>Child</code>的<code>Second</code>方法里面，由于里面调用了<code>super</code>，它会先去<code>Father</code>的<code>Second</code>方法，再返回并继续，这时候<code>Father</code>的<code>First</code>方法就调用完了，继续调用<code>Child</code>的<code>First</code>方法</b>
+<p>在C#里面的行为是一样的</p>
+<textarea class="codeTextarea">
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Father fc = new Child();
+        fc.First();
+    }
+}
+
+public class Father
+{
+    public virtual void First()
+    {
+        Console.WriteLine("father's first method");
+        Second();
+    }
+
+    public virtual void Second()
+    {
+        Console.WriteLine("father's second method");
+    }
+}
+
+public class Child : Father
+{
+    public override void First()
+    {
+        base.First();
+        Console.WriteLine("child's first method");
+    }
+
+    public override void Second()
+    {
+        base.Second();
+        Console.WriteLine("child's second method");
+    }
+}
+
+</textarea>
+<b>即使加上<code>this</code>关键字，它也会去寻找最新版本，也就是说没有差别。</b>
+        </div>
+        <div id="extension-content"></div>
+    </div>
+    <br>
+
+
+    <div id="extension-footer"></div>
+    <div id="footer"></div>
+</body>
+
+</html>
