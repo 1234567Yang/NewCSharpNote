@@ -13,6 +13,7 @@ function load(){
 
 
     if(!isSpider()){
+        loadAnalysis();
         loadAds(); //一定要放在最后！
     }
 }
@@ -103,6 +104,18 @@ function loadAds(){
         document.body.appendChild(script);
         console.log("loaded ads.");
     }, 1000);  // 延迟1秒加载脚本
+}
+function loadAnalysis(){
+    var script = document.createElement("script");
+    script.src = "https://www.googletagmanager.com/gtag/js?id=G-21XVVP88DK";
+    document.body.appendChild(script);
+
+    
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-21XVVP88DK');
 }
 function getUrlParams(url) {
 	let urlStr = url.split('?')[1]
