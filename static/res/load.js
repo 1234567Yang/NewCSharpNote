@@ -4,12 +4,17 @@ setTimeout(load, 100);
 function load(){
     loadCodeHighlight();
     loadImage();
+    loadHintConsole();
     if(!isSpider()){
         loadHeader();
         loadFooter();
         loadAnnouncement();
     }
-    loadHintConsole();
+
+
+    if(!isSpider()){
+        loadAds(); //一定要放在最后！
+    }
 }
 function isSpider(){
     var userAgent = navigator.userAgent;
@@ -87,6 +92,15 @@ function loadAnnouncement(){
 function loadHintConsole(){
 	console.log('%c LICENSE: 未经允许，禁止商业使用本项目（包括使用本项目的任何CSS/JS做有营利性的网站，包括广告）。 The Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) ', 
 	'font-size:20px; background:rgb(255,255,0); color: black');
+}
+function loadAds(){
+    setTimeout(function() {
+        var script = document.createElement("script");
+        script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4204717380896480";
+        script.async = true;
+        script.crossOrigin = "anonymous";
+        document.body.appendChild(script);
+    }, 1000);  // 延迟1秒加载脚本
 }
 function getUrlParams(url) {
 	let urlStr = url.split('?')[1]
