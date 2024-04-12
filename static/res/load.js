@@ -95,11 +95,13 @@ function loadHintConsole(){
 }
 function loadAds(){
     setTimeout(function() {
+        console.log("loading ads.");
         var script = document.createElement("script");
         script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4204717380896480";
         script.async = true;
         script.crossOrigin = "anonymous";
         document.body.appendChild(script);
+        console.log("loaded ads.");
     }, 1000);  // 延迟1秒加载脚本
 }
 function getUrlParams(url) {
