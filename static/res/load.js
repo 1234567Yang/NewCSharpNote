@@ -1,3 +1,6 @@
+setTimeout(load, 100);
+//load();
+
 function load(){
     loadCodeHighlight();
     loadImage();
