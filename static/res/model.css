@@ -122,7 +122,24 @@ ul.menu .drop-detail a:hover {
     margin-left: 20%;
     margin-right: 20%;
 }
-
+/*
+#ads-left{
+    position: fixed;
+    left: 10px;
+    width: calc(20% - 10px * 2);
+    top:10%;
+    height:70%;
+    background-color: lightgray;
+}
+#ads-right{
+    position: fixed;
+    right:10px;
+    width: calc(20% - 10px * 2);
+    top:10%;
+    height:70%;
+    background-color: lightgray;
+}
+*/
 #essay{
     background-color: rgb(245,245,245);
     border-radius: 3px;
@@ -137,7 +154,7 @@ ul.menu .drop-detail a:hover {
 .content {
     position: relative;
     font-size: var(--content-font-size);
-    min-height: 100%;
+    min-height: 100vh;
 }
 
 .CodeMirror {
