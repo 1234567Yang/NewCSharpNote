@@ -36,13 +36,40 @@ namespace NotesManage
             textEditorControl1.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("HTML");
             textEditorControl1.Encoding = Encoding.UTF8;
             textEditorControl1.ActiveTextAreaControl.TextArea.KeyUp += new System.Windows.Forms.KeyEventHandler(textEditorControl1_KeyUp);
+            textEditorControl1.ActiveTextAreaControl.TextArea.KeyDown += (_s, _e) =>
+            {
+                lastTime = textEditorControl1.Document.TextContent; //中文输入法
+
+            };
         }
+        private string lastTime = "";
+
+        private string[] SelfCloseElements = 
+        {
+            "input",
+            "br",
+            "img",
+            "hr",
+            "meta",
+            "link",
+            "base",
+            "area",
+            "col",
+            "command",
+            "embed",
+            "keygen",
+            "param",
+            "source",
+            "track"
+        };
+
         private void textEditorControl1_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.ShiftKey || e.KeyCode == Keys.ControlKey || e.KeyCode == Keys.Alt)
+            if (e.KeyCode == Keys.ShiftKey || e.KeyCode == Keys.ControlKey || e.KeyCode == Keys.Alt)
             {
                 return;
             }
+            if (lastTime == textEditorControl1.Document.TextContent) return;
             //textEditorControl1.ActiveTextAreaControl.SelectionManager.SelectedText;
             int pos = textEditorControl1.Document.PositionToOffset(textEditorControl1.ActiveTextAreaControl.Caret.Position);
             int lineIndex = textEditorControl1.ActiveTextAreaControl.Caret.Position.Line;
@@ -55,24 +82,30 @@ namespace NotesManage
             //Console.WriteLine(pos);
             if (cursorPosInLine > 0 && lineText.Substring(cursorPosInLine - 1, 1) == ">")
             {
+                if (cursorPosInLine > 1 && lineText.Substring(cursorPosInLine - 2, 1) == ">") return;
                 // 获取当前行的索引
-                
-                if(lineText.Substring(0, cursorPosInLine).IndexOf("<") != -1)
+
+                if (lineText.Substring(0, cursorPosInLine).IndexOf("<") != -1)
                 {
-                    if(!IsInQuote(lineText, cursorPosInLine))
+                    if (!IsInQuote(lineText, cursorPosInLine))
                     {
                         //Console.WriteLine("!!!");
                         int p1 = lineText.Substring(0, cursorPosInLine).LastIndexOf("<");
-                        while(IsInQuote(lineText, p1))
+                        while (IsInQuote(lineText, p1))
                         {
                             p1 = lineText.Substring(0, cursorPosInLine - p1).LastIndexOf("<");
                             if (p1 == -1) return;
                         }
                         string insert = lineText.Substring(p1 + 1, cursorPosInLine - p1 - 2);
                         //Console.WriteLine(insert);
-                        if(insert.IndexOf("/") == -1)
+                        if (insert.IndexOf("/") == -1)
                         {
-                            insert = "</" + insert.Substring(0, (insert.IndexOf(" ") != -1)? insert.IndexOf(" "):insert.Length) + ">";
+                            var element = insert.Substring(0, (insert.IndexOf(" ") != -1) ? insert.IndexOf(" ") : insert.Length);
+                            foreach (var a in SelfCloseElements)
+                            {
+                                if (a == element.ToLower()) return;
+                            }
+                            insert = "</" + element + ">";
                             textEditorControl1.Document.Insert(textEditorControl1.ActiveTextAreaControl.Caret.Offset, insert);
                         }
                     }
@@ -109,19 +142,19 @@ namespace NotesManage
         {
             string dir = this.textBox_html.Text.Substring(0, this.textBox_html.Text.IndexOf(".")) + "\\";
             Directory.CreateDirectory(this.textBox_html.Text.Substring(0, this.textBox_html.Text.IndexOf(".")));
-            File.WriteAllText(dir + "F_" + this.textBox_html.Text,this.textEditorControl1.Text);
-            File.AppendAllText("index.txt", dir + "F_" + this.textBox_html.Text + "|" + 
-                this.textBox_title.Text + "|" + 
+            File.WriteAllText(dir + "F_" + this.textBox_html.Text, this.textEditorControl1.Text);
+            File.AppendAllText("index.txt", dir + "F_" + this.textBox_html.Text + "|" +
+                this.textBox_title.Text + "|" +
                 DateTime.UtcNow.ToString() + "|" +
                 this.textBox_color.Text + "|" +
-                this.textBox_bgcolor.Text + 
+                this.textBox_bgcolor.Text +
                 Environment.NewLine);
 
-            if(Directory.Exists("raw\\" + this.textBox_html.Text.Substring(0, this.textBox_html.Text.IndexOf("."))))
+            if (Directory.Exists("raw\\" + this.textBox_html.Text.Substring(0, this.textBox_html.Text.IndexOf("."))))
             {
-                if(MessageBox.Show("Also copy the image?", "Question: ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("Also copy the image?", "Question: ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    foreach(var a in Directory.EnumerateFiles("raw\\" + this.textBox_html.Text.Substring(0, this.textBox_html.Text.IndexOf("."))))
+                    foreach (var a in Directory.EnumerateFiles("raw\\" + this.textBox_html.Text.Substring(0, this.textBox_html.Text.IndexOf("."))))
                     {
                         File.WriteAllBytes(dir + Path.GetFileName(a), File.ReadAllBytes(a));
                     }
@@ -133,13 +166,13 @@ namespace NotesManage
             this.textBox_descrip.Text = "";
             // this.textBox_keywords.Text = "";
             this.textEditorControl1.Text = "";
-            
+
         }
 
         private void button_gettitle_Click(object sender, EventArgs e)
         {
             string dir = this.textBox_html.Text.Substring(0, this.textBox_html.Text.IndexOf(".")) + "\\";
-            if(!File.Exists(dir + "F_" + this.textBox_html.Text))
+            if (!File.Exists(dir + "F_" + this.textBox_html.Text))
             {
                 MessageBox.Show("NOT EXISTS");
                 return;
