@@ -91,7 +91,7 @@ function loadAnnouncement(){
 	}
 }
 function loadHintConsole(){
-	console.log('%c LICENSE: 未经允许，禁止商业使用本项目（包括使用本项目的任何CSS/JS做有营利性的网站，包括广告）。 The Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) ', 
+	console.log('%c 未经许可，禁止重新分发、复制、修改、翻译、传唤、传真、传感、传染本资料。Unauthorized Redistribution: Without permission, refrain from redistributing, copying, modifying, translating, summoning, parking, fishing, or infecting this material.', 
 	'font-size:20px; background:rgb(255,255,0); color: black');
 }
 function loadAds(){
